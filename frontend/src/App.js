@@ -1,38 +1,60 @@
-import { useEffect } from "react";
+import { useState } from "react";
 import "@/App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import axios from "axios";
+import { Toaster } from "@/components/ui/sonner";
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const API = `${BACKEND_URL}/api`;
+import Header from "@/components/sections/Header";
+import Hero from "@/components/sections/Hero";
+import WarningMarquee from "@/components/sections/WarningMarquee";
+import Methodology from "@/components/sections/Methodology";
+import Risks from "@/components/sections/Risks";
+import Testimonials from "@/components/sections/Testimonials";
+import FAQ from "@/components/sections/FAQ";
+import LeadCapture from "@/components/sections/LeadCapture";
+import PriorityModal from "@/components/sections/PriorityModal";
+import Footer from "@/components/sections/Footer";
 
-const Home = () => {
-  const helloWorldApi = async () => {
-    try {
-      const response = await axios.get(`${API}/`);
-      console.log(response.data.message);
-    } catch (e) {
-      console.error(e, `errored out requesting / api`);
-    }
+const Landing = () => {
+  const [priorityOpen, setPriorityOpen] = useState(false);
+
+  const scrollNext = () => {
+    document
+      .getElementById("metodologia")
+      ?.scrollIntoView({ behavior: "smooth" });
   };
 
-  useEffect(() => {
-    helloWorldApi();
-  }, []);
-
   return (
-    <div>
-      <header className="App-header">
-        <a
-          className="App-link"
-          href="https://emergent.sh"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <img src="https://avatars.githubusercontent.com/in/1201222?s=120&u=2686cf91179bbafbc7a71bfbc43004cf9ae1acea&v=4" />
-        </a>
-        <p className="mt-5">Building something incredible ~!</p>
-      </header>
+    <div className="bg-[#050505] text-white min-h-screen">
+      <Header onPriorityClick={() => setPriorityOpen(true)} />
+      <main>
+        <Hero
+          onScrollDown={scrollNext}
+          onPriorityClick={() => setPriorityOpen(true)}
+        />
+        <WarningMarquee />
+        <Methodology />
+        <Risks />
+        <Testimonials />
+        <FAQ />
+        <LeadCapture />
+      </main>
+      <Footer />
+      <PriorityModal
+        open={priorityOpen}
+        onClose={() => setPriorityOpen(false)}
+      />
+      <Toaster
+        theme="dark"
+        position="bottom-right"
+        toastOptions={{
+          style: {
+            background: "#0a0a0a",
+            border: "1px solid rgba(191,149,63,0.4)",
+            color: "#fff",
+            fontFamily: "Outfit, sans-serif",
+          },
+        }}
+      />
     </div>
   );
 };
@@ -42,9 +64,7 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Home />}>
-            <Route index element={<Home />} />
-          </Route>
+          <Route path="/" element={<Landing />} />
         </Routes>
       </BrowserRouter>
     </div>
