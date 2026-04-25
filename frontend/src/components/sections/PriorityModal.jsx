@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "sonner";
 import { X, Loader2 } from "lucide-react";
@@ -10,6 +10,15 @@ export const PriorityModal = ({ open, onClose }) => {
   const [company, setCompany] = useState("");
   const [loading, setLoading] = useState(false);
   const [done, setDone] = useState(false);
+
+  useEffect(() => {
+    if (!open) {
+      // reset transient state when modal closes
+      setDone(false);
+      setEmail("");
+      setCompany("");
+    }
+  }, [open]);
 
   if (!open) return null;
 
@@ -73,7 +82,7 @@ export const PriorityModal = ({ open, onClose }) => {
           </p>
 
           {done ? (
-            <div className="space-y-4 max-w-sm mx-auto">
+            <div data-testid="priority-success" className="space-y-4 max-w-sm mx-auto">
               <div className="border border-[#bf953f]/40 p-6">
                 <p className="font-cinzel text-lg gold-text">
                   Candidatura recebida.

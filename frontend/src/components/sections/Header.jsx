@@ -74,7 +74,7 @@ export const Header = ({ onPriorityClick }) => {
       </div>
 
       {open && (
-        <div className="lg:hidden border-t border-white/10 bg-black/95 backdrop-blur-xl">
+        <div data-testid="mobile-menu" className="lg:hidden border-t border-white/10 bg-black/95 backdrop-blur-xl">
           <div className="px-6 py-6 flex flex-col gap-5">
             {links.map((l) => (
               <a
