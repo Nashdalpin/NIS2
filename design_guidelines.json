@@ -1,0 +1,163 @@
+{
+  "theme_and_archetype": {
+    "domain": "B2B Cybersecurity Consulting & EU NIS2 Compliance",
+    "theme": "Dark",
+    "archetype": "Archetype 5: Jewel & Luxury (Premium Corporate)",
+    "description": "High-end corporate consultancy aesthetic combining deep blacks, crisp gold accents, and elegant typography to convey authority, bespoke service, and urgency. No neon, no purple, no generic SaaS blues."
+  },
+  "typography": {
+    "fonts": {
+      "heading": "Cinzel",
+      "body": "Outfit",
+      "mono": "JetBrains Mono"
+    },
+    "scale": {
+      "h1": "text-4xl md:text-5xl lg:text-6xl tracking-tight",
+      "h2": "text-3xl md:text-4xl lg:text-5xl tracking-tight",
+      "h3": "text-2xl md:text-3xl",
+      "body": "text-base md:text-lg leading-relaxed text-white/80",
+      "micro": "text-xs tracking-[0.5em] uppercase font-bold text-[#bf953f]"
+    },
+    "rules": {
+      "headings": "Always use 'Cinzel'. Do not center align by default. Use normal or bold weight, never light.",
+      "body": "Always use 'Outfit'. Keep line height relaxed.",
+      "overline": "Use the micro-typography settings for all category tags and overlines."
+    }
+  },
+  "color_palette": {
+    "css_variables": {
+      "--background": "0 0% 2%",
+      "--foreground": "0 0% 100%",
+      "--primary": "42 50% 50%", 
+      "--primary-foreground": "0 0% 0%",
+      "--secondary": "0 0% 8%",
+      "--secondary-foreground": "0 0% 100%",
+      "--accent": "42 50% 50%",
+      "--accent-foreground": "0 0% 100%",
+      "--muted": "0 0% 15%",
+      "--muted-foreground": "0 0% 65%",
+      "--border": "0 0% 15%",
+      "--card": "0 0% 4%",
+      "--card-foreground": "0 0% 100%",
+      "--gold-hex": "#bf953f"
+    },
+    "usage": {
+      "background_layers": "Use the #050505 root background. Use #0c0c0c (or card var) for surface layers like cards and modals.",
+      "primary_gold": "Use #bf953f strictly for accents, primary buttons, micro-typography, and subtle borders.",
+      "forbidden": "Do NOT use purple (#9D4CDD) or teal (#1B93A4). Do NOT use generic gradients. No pure white backgrounds except for the marquee."
+    }
+  },
+  "spacing_and_layout": {
+    "container": "Max-w-7xl mx-auto px-6 lg:px-8",
+    "section_padding": "py-24 lg:py-32",
+    "grids": {
+      "methodology": "grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8",
+      "risks": "grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12",
+      "testimonials": "grid-cols-1 md:grid-cols-3 gap-6"
+    },
+    "alignment": "Prioritize left-alignment for dense text and cards. Asymmetry is preferred over perfect centering."
+  },
+  "component_strategies": {
+    "header": {
+      "style": "Glass-morphism fixed top-0 w-full z-50",
+      "classes": "backdrop-blur-xl bg-black/60 border-b border-white/10",
+      "logo": "Text logo 'DALPIN' in Cinzel font.",
+      "links": "Anchor links (Metodologia, Riscos, Testemunhos, FAQ, Contacto) visible on desktop."
+    },
+    "hero": {
+      "visual": "Dark overlay background with the radar pulse effect.",
+      "radar_effect": "A series of concentric circles centered around a key visual or background, using absolute positioning, border-[#bf953f]/30, rounded-full, and animate-ping on the outer rings.",
+      "ctas": "Double CTAs. Primary: 'bg-white text-black hover:bg-black hover:text-white border border-white hover:border-white transition-all'. Secondary: 'bg-transparent text-[#bf953f] border border-[#bf953f]/50 hover:bg-[#bf953f]/10'."
+    },
+    "marquee": {
+      "style": "bg-white text-black py-3 border-y border-[#bf953f]",
+      "typography": "uppercase tracking-widest text-sm font-bold",
+      "implementation": "Use react-fast-marquee. Content: Regulatory alerts ('PRAZO NIS2: OUTUBRO 2024 • COIMAS ATÉ 10M€ • AUDITORIA OBRIGATÓRIA...')"
+    },
+    "methodology_90_days": {
+      "cards": "4 numbered cards. Glass-morphism (bg-white/5 border border-white/10 hover:border-[#bf953f]/40).",
+      "content": "Numbers (01, 02...) in large Cinzel font (#bf953f). Titles: Gap Analysis, Plano de Resposta, Governance, Compliance."
+    },
+    "risks": {
+      "layout": "3 columns. Focus on text clarity and urgency.",
+      "content": "Cadeia de Fornecedores, Reporte em 24h, Responsabilidade Civil da Administração."
+    },
+    "testimonials": {
+      "style": "Clean bento-style cards. Uses portraits from media_urls.",
+      "content": "Quotes from C-level / board members about the precision and necessity of Dalpin's audit."
+    },
+    "faq": {
+      "component": "Shadcn Accordion. Background transparent, white text, subtle bottom borders border-white/20. Hover state text-[#bf953f]."
+    },
+    "lead_capture_form": {
+      "backend": "FastAPI to MongoDB + Resend email for Executive Checklist PDF.",
+      "ui": "Shadcn form. Inputs: bg-transparent border-white/20 focus:border-[#bf953f] text-white. Placeholder text-white/40.",
+      "fields": "Nome, Email Corporativo, Cargo",
+      "submit_button": "Solid white button, black text, inverted on hover."
+    },
+    "modal_priority_audit": {
+      "trigger": "Secondary Hero CTA or Nav CTA.",
+      "style": "Glass-morphism overlay. Dark card background border-[#bf953f]/30.",
+      "content": "Fake door list for Priority Audit. Simple form (Email) to join waitlist."
+    },
+    "footer": {
+      "layout": "py-24 border-t border-white/10. 4 columns (Logo/About, Links, Legal, Contact).",
+      "micro": "Includes full address, copyright, and subtle gold accents."
+    }
+  },
+  "microinteractions": {
+    "hover_states": "Buttons use inverted hover (white to black text/bg swap). Cards use subtle transform -translate-y-1 and a glow shadow shadow-[0_0_15px_rgba(191,149,63,0.15)].",
+    "scroll_reveals": "Use framer-motion for fade-in and slight slide-up (y: 20 -> 0) on scroll.",
+    "radar_pulse": "Continuous slow ping animation on Hero background elements to simulate scanning/auditing."
+  },
+  "media_urls": {
+    "hero_backgrounds": [
+      {
+        "url": "https://images.unsplash.com/photo-1771226281605-f1e505ade901?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxODF8MHwxfHNlYXJjaHwyfHxkYXJrJTIwbHV4dXJ5JTIwZ2VvbWV0cmljJTIwcGF0dGVybnxlbnwwfHx8fDE3NzcxMjY0MjF8MA&ixlib=rb-4.1.0&q=85",
+        "description": "Abstract dark geometric pattern with golden accents for the hero background.",
+        "category": "hero_bg"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1761437855740-c894da924d79?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxODF8MHwxfHNlYXJjaHwxfHxkYXJrJTIwbHV4dXJ5JTIwZ2VvbWV0cmljJTIwcGF0dGVybnxlbnwwfHx8fDE3NzcxMjY0MjF8MA&ixlib=rb-4.1.0&q=85",
+        "description": "Golden metallic lines against black background, alternative for specific sections.",
+        "category": "section_bg"
+      }
+    ],
+    "testimonials": [
+      {
+        "url": "https://images.unsplash.com/photo-1633366147060-ce9e1a9fd39c?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1MTN8MHwxfHNlYXJjaHwzfHxjb3Jwb3JhdGUlMjBleGVjdXRpdmUlMjBwb3J0cmFpdCUyMGRhcmslMjBiYWNrZ3JvdW5kfGVufDB8fHx8MTc3NzEyNjQxNnww&ixlib=rb-4.1.0&q=85",
+        "description": "C-level executive portrait 1",
+        "category": "portrait"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1767175620484-1ed37931a0d1?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1MTN8MHwxfHNlYXJjaHwxfHxjb3Jwb3JhdGUlMjBleGVjdXRpdmUlMjBwb3J0cmFpdCUyMGRhcmslMjBiYWNrZ3JvdW5kfGVufDB8fHx8MTc3NzEyNjQxNnww&ixlib=rb-4.1.0&q=85",
+        "description": "C-level executive portrait 2",
+        "category": "portrait"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1638290047807-4c9d389b9aa6?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1MTN8MHwxfHNlYXJjaHwyfHxjb3Jwb3JhdGUlMjBleGVjdXRpdmUlMjBwb3J0cmFpdCUyMGRhcmslMjBiYWNrZ3JvdW5kfGVufDB8fHx8MTc3NzEyNjQxNnww&ixlib=rb-4.1.0&q=85",
+        "description": "C-level executive portrait 3",
+        "category": "portrait"
+      }
+    ],
+    "logos": [
+      {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/8/82/European_Union_logo.svg",
+        "description": "EU Logo for compliance trust badge.",
+        "category": "trust_badge"
+      }
+    ]
+  },
+  "instructions_to_main_agent": [
+    "Install Google Fonts for 'Cinzel' and 'Outfit' in index.html.",
+    "Install 'react-fast-marquee' for the alerts ticker.",
+    "Install 'framer-motion' for scroll reveals and modal animations.",
+    "Install 'lucide-react' for all icons (CheckCircle, Shield, ChevronDown, ArrowRight, etc.).",
+    "Strictly follow the color palette. Dark backgrounds, gold accents (#bf953f), white text.",
+    "Implement the FastAPI backend for lead capture (saving to MongoDB) and use Resend for sending the PDF link.",
+    "Ensure all language used in the UI is Portuguese (pt-PT).",
+    "Add data-testid attributes to all form inputs, CTAs, modal triggers, and accordion items (e.g., data-testid='lead-form-email-input').",
+    "Use Shadcn UI for the Lead Form, Dialog (fake door), and Accordion (FAQ), but heavily override their default styles to match the dark/gold luxury theme (remove default white backgrounds, use bg-transparent and border-white/20).",
+    "Do NOT use pure white overlays on images. Max overlay opacity bg-black/50 to let the luxury textures shine through."
+  ]
+}
