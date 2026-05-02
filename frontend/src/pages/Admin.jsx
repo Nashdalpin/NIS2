@@ -10,6 +10,8 @@ import {
   RefreshCw,
   Mail,
   ExternalLink,
+  Trash2,
+  AlertTriangle,
 } from "lucide-react";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
@@ -233,15 +235,71 @@ export default function Admin() {
     setToken("");
   };
 
+  const del = async (collection, id) => {
+    const confirmMsg =
+      collection === "leads"
+        ? "Apagar este lead definitivamente? Esta acção não pode ser revertida."
+        : collection === "waitlist"
+        ? "Remover candidatura da lista de espera?"
+        : collection === "downloads"
+        ? "Apagar registo de download?"
+        : "Apagar diagnóstico de risco?";
+    if (!window.confirm(confirmMsg)) return;
+    const endpoint = {
+      leads: `${API}/leads/${id}`,
+      waitlist: `${API}/waitlist/${id}`,
+      downloads: `${API}/downloads/${id}`,
+      risk: `${API}/risk-assessments/${id}`,
+    }[collection];
+    try {
+      await axios.delete(endpoint, { headers });
+      await load();
+    } catch (e) {
+      alert("Erro ao apagar. Tente novamente.");
+    }
+  };
+
+  const purge = async () => {
+    if (
+      !window.confirm(
+        "APAGAR TODOS os dados (Leads, Waitlist, Downloads, Risk Scores)?\n\nEsta acção é IRREVERSÍVEL."
+      )
+    )
+      return;
+    if (
+      !window.confirm(
+        "Tem mesmo a certeza? Escreva mentalmente 'APAGAR TUDO' antes de confirmar."
+      )
+    )
+      return;
+    try {
+      await axios.post(`${API}/admin/purge`, null, { headers });
+      await load();
+    } catch {
+      alert("Erro no purge.");
+    }
+  };
+
   if (!token) {
     return <LoginScreen onLogin={(t) => setToken(t)} />;
   }
 
   const renderBody = () => {
+    const DelBtn = ({ onClick, label = "Apagar" }) => (
+      <button
+        onClick={onClick}
+        data-testid="admin-row-delete"
+        title={label}
+        className="text-white/30 hover:text-red-400 transition-colors inline-flex items-center gap-1"
+      >
+        <Trash2 size={14} />
+      </button>
+    );
+
     if (tab === "leads") {
       return (
         <Table
-          cols={["Data", "Nome", "Email", "Cargo", "Email enviado"]}
+          cols={["Data", "Nome", "Email", "Cargo", "Email enviado", "Notion", ""]}
           empty="Ainda não há leads capturados."
           rows={data.leads.map((r) => [
             fmt(r.created_at),
@@ -264,6 +322,16 @@ export default function Admin() {
                 ✕ Falhou
               </span>
             ),
+            r.notion_sync_status === "synced" ? (
+              <span className="text-green-400 text-[10px] uppercase tracking-widest">✓ Sync</span>
+            ) : r.notion_sync_status === "failed" ? (
+              <span title={r.notion_sync_error || ""} className="text-red-400/80 text-[10px] uppercase tracking-widest">
+                ✕ Falhou
+              </span>
+            ) : (
+              <span className="text-white/30 text-[10px] uppercase tracking-widest">—</span>
+            ),
+            <DelBtn key="d" onClick={() => del("leads", r.id)} />,
           ])}
         />
       );
@@ -271,7 +339,7 @@ export default function Admin() {
     if (tab === "waitlist") {
       return (
         <Table
-          cols={["Data", "Email", "Organização"]}
+          cols={["Data", "Email", "Organização", ""]}
           empty="Lista de espera vazia."
           rows={data.waitlist.map((r) => [
             fmt(r.created_at),
@@ -283,6 +351,7 @@ export default function Admin() {
               <Mail size={12} /> {r.email}
             </a>,
             r.company || "—",
+            <DelBtn key="d" onClick={() => del("waitlist", r.id)} />,
           ])}
         />
       );
@@ -290,7 +359,7 @@ export default function Admin() {
     if (tab === "downloads") {
       return (
         <Table
-          cols={["Data", "Recurso", "IP", "Referer"]}
+          cols={["Data", "Recurso", "IP", "Referer", ""]}
           empty="Sem downloads registados."
           rows={data.downloads.map((r) => [
             fmt(r.created_at),
@@ -306,6 +375,7 @@ export default function Admin() {
                 {r.referer} <ExternalLink size={12} />
               </a>
             ) : "—",
+            <DelBtn key="d" onClick={() => del("downloads", r.id)} />,
           ])}
         />
       );
@@ -313,7 +383,7 @@ export default function Admin() {
     // risk
     return (
       <Table
-        cols={["Data", "Score", "Nível", "Sector", "Dimensão", "CISO"]}
+        cols={["Data", "Score", "Nível", "Sector", "Dimensão", "CISO", ""]}
         empty="Sem diagnósticos submetidos."
         rows={data.risk.map((r) => [
           fmt(r.created_at),
@@ -322,6 +392,7 @@ export default function Admin() {
           r.answers?.sector || "—",
           r.answers?.size || "—",
           r.answers?.ciso || "—",
+          <DelBtn key="d" onClick={() => del("risk", r.id)} />,
         ])}
       />
     );
@@ -356,6 +427,15 @@ export default function Admin() {
               className="text-[10px] uppercase tracking-[0.3em] text-white/60 hover:text-[#bf953f]"
             >
               Ver Site
+            </button>
+            <button
+              onClick={purge}
+              data-testid="admin-purge"
+              className="text-[10px] uppercase tracking-[0.3em] text-white/60 hover:text-red-400 inline-flex items-center gap-2"
+              title="Apagar todos os dados"
+            >
+              <AlertTriangle size={12} />
+              Purge
             </button>
             <button
               onClick={logout}

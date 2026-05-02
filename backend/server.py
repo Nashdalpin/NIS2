@@ -296,6 +296,56 @@ async def admin_stats(_: bool = Depends(require_admin)):
     }
 
 
+@api_router.delete("/leads/{lead_id}")
+async def delete_lead(lead_id: str, _: bool = Depends(require_admin)):
+    res = await db.leads.delete_one({"id": lead_id})
+    if res.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Lead not found")
+    return {"ok": True, "deleted": lead_id}
+
+
+@api_router.delete("/waitlist/{item_id}")
+async def delete_waitlist(item_id: str, _: bool = Depends(require_admin)):
+    res = await db.waitlist.delete_one({"id": item_id})
+    if res.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Waitlist item not found")
+    return {"ok": True, "deleted": item_id}
+
+
+@api_router.delete("/downloads/{item_id}")
+async def delete_download(item_id: str, _: bool = Depends(require_admin)):
+    res = await db.downloads.delete_one({"id": item_id})
+    if res.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Download log not found")
+    return {"ok": True, "deleted": item_id}
+
+
+@api_router.delete("/risk-assessments/{item_id}")
+async def delete_risk_assessment(item_id: str, _: bool = Depends(require_admin)):
+    res = await db.risk_assessments.delete_one({"id": item_id})
+    if res.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Risk assessment not found")
+    return {"ok": True, "deleted": item_id}
+
+
+@api_router.post("/admin/purge")
+async def admin_purge(
+    collections: str = "leads,waitlist,downloads,risk_assessments",
+    _: bool = Depends(require_admin),
+):
+    """Delete ALL documents from the specified collections. Use with care."""
+    allowed = {"leads", "waitlist", "downloads", "risk_assessments"}
+    requested = {c.strip() for c in collections.split(",") if c.strip()}
+    invalid = requested - allowed
+    if invalid:
+        raise HTTPException(status_code=400, detail=f"Invalid collections: {sorted(invalid)}")
+    result = {}
+    for c in requested:
+        r = await db[c].delete_many({})
+        result[c] = r.deleted_count
+    return {"ok": True, "deleted": result}
+
+
 @api_router.post("/waitlist", response_model=Waitlist)
 async def join_waitlist(payload: WaitlistCreate):
     entry = Waitlist(email=payload.email, company=payload.company)
