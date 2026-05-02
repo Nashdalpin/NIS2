@@ -37,30 +37,26 @@ def _lead_to_properties(
     score: Optional[int] = None,
     created_at_iso: Optional[str] = None,
 ) -> Dict[str, Any]:
-    """Map a Lead to Notion database properties matching the actual DB schema.
+    """Map a Lead to Notion database properties.
 
-    Detected Notion DB columns (database "Leads"):
-      - Name (Title)
+    Matches the actual "PDF Leads" schema:
+      - Nome (Title)
       - Email (Email)
-      - First Contact (Date)
-      - Source (Select)       -> we set "Website NIS2 Landing"
-      - Type Of Service (Select) -> derived from role/cargo
-      - Phone Number (Phone)  -> not captured yet, left empty
-      - Potential Income, Status, 1st/2nd Follow Up -> left untouched
-
-    Score NIS2 is NOT stored in Notion (this DB has no matching column) —
-    the score stays in MongoDB / admin dashboard.
+      - Cargo (Rich text)
+      - Data (Date)
+      - Email Enviado (Checkbox)
+      - Score NIS2 (Number, optional)
     """
     props: Dict[str, Any] = {
-        "Name": {"title": [{"text": {"content": (name or "")[:200]}}]},
+        "Nome": {"title": [{"text": {"content": (name or "")[:200]}}]},
         "Email": {"email": email},
-        "Source": {"select": {"name": "Website NIS2 Landing"}},
+        "Cargo": {"rich_text": [{"text": {"content": (role or "")[:200]}}]},
+        "Email Enviado": {"checkbox": bool(email_sent)},
     }
-    if role:
-        props["Type Of Service"] = {"select": {"name": role[:100]}}
     if created_at_iso:
-        # Notion accepts ISO date (YYYY-MM-DD or full ISO datetime)
-        props["First Contact"] = {"date": {"start": created_at_iso}}
+        props["Data"] = {"date": {"start": created_at_iso}}
+    if score is not None:
+        props["Score NIS2"] = {"number": int(score)}
     return props
 
 
