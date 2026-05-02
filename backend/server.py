@@ -1,4 +1,4 @@
-from fastapi import FastAPI, APIRouter, HTTPException, Header, Request, Depends
+from fastapi import FastAPI, APIRouter, HTTPException, Header, Request, Depends, BackgroundTasks
 from fastapi.responses import FileResponse
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
@@ -12,6 +12,7 @@ from typing import List, Optional
 import uuid
 from datetime import datetime, timezone
 import resend
+from notion_sync import sync_lead_background, push_lead_to_notion
 
 ROOT_DIR = Path(__file__).parent
 STATIC_DIR = ROOT_DIR / "static"
@@ -67,6 +68,9 @@ class Lead(BaseModel):
     role: str
     email_sent: bool = False
     email_error: Optional[str] = None
+    notion_page_id: Optional[str] = None
+    notion_sync_status: Optional[str] = None  # pending | synced | failed
+    notion_sync_error: Optional[str] = None
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
 
@@ -194,19 +198,31 @@ async def root():
 
 
 @api_router.post("/leads", response_model=Lead)
-async def create_lead(payload: LeadCreate):
+async def create_lead(payload: LeadCreate, background_tasks: BackgroundTasks):
     lead = Lead(name=payload.name.strip(), email=payload.email, role=payload.role.strip())
     sent, err = await send_lead_email(lead.name, lead.email)
     lead.email_sent = sent
     lead.email_error = err
+    lead.notion_sync_status = "pending"
 
     doc = lead.model_dump()
     doc['created_at'] = doc['created_at'].isoformat()
     await db.leads.insert_one(doc)
 
     if not sent:
-        # We still return the lead but signal email failure via field; FE can show fallback
         logger.warning(f"Lead {lead.email} saved but email NOT sent: {err}")
+
+    # Schedule non-blocking Notion sync
+    background_tasks.add_task(
+        sync_lead_background,
+        lead.id,
+        lead.name,
+        lead.email,
+        lead.role,
+        lead.email_sent,
+        db,
+        lead.created_at.date().isoformat(),
+    )
     return lead
 
 
