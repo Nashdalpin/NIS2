@@ -19,6 +19,7 @@ import Footer from "@/components/sections/Footer";
 import ScrollProgress from "@/components/sections/ScrollProgress";
 import CookieConsent from "@/components/sections/CookieConsent";
 import FadeIn from "@/components/sections/FadeIn";
+import Admin from "@/pages/Admin";
 
 const Landing = () => {
   const [priorityOpen, setPriorityOpen] = useState(false);
@@ -94,6 +95,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Landing />} />
+          <Route path="/admin" element={<Admin />} />
         </Routes>
       </BrowserRouter>
     </div>

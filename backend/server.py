@@ -261,6 +261,25 @@ async def list_downloads(_: bool = Depends(require_admin)):
     return {"total": total, "items": items}
 
 
+@api_router.get("/risk-assessments", response_model=List[RiskAssessment])
+async def list_risk_assessments(_: bool = Depends(require_admin)):
+    items = await db.risk_assessments.find({}, {"_id": 0}).sort("created_at", -1).to_list(500)
+    for it in items:
+        if isinstance(it.get('created_at'), str):
+            it['created_at'] = datetime.fromisoformat(it['created_at'])
+    return items
+
+
+@api_router.get("/admin/stats")
+async def admin_stats(_: bool = Depends(require_admin)):
+    return {
+        "leads": await db.leads.count_documents({}),
+        "waitlist": await db.waitlist.count_documents({}),
+        "downloads": await db.downloads.count_documents({}),
+        "risk_assessments": await db.risk_assessments.count_documents({}),
+    }
+
+
 @api_router.post("/waitlist", response_model=Waitlist)
 async def join_waitlist(payload: WaitlistCreate):
     entry = Waitlist(email=payload.email, company=payload.company)
