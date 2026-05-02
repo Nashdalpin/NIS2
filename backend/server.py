@@ -66,6 +66,25 @@ class Waitlist(BaseModel):
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
 
+class RiskAssessmentCreate(BaseModel):
+    answers: dict
+    score: int = Field(..., ge=0, le=100)
+    level: str
+    email: Optional[EmailStr] = None
+    company: Optional[str] = None
+
+
+class RiskAssessment(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    answers: dict
+    score: int
+    level: str
+    email: Optional[EmailStr] = None
+    company: Optional[str] = None
+    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+
+
 # ---------- Email template ----------
 def build_email_html(name: str, pdf_url: str) -> str:
     return f"""
@@ -189,6 +208,21 @@ async def join_waitlist(payload: WaitlistCreate):
     doc = entry.model_dump()
     doc['created_at'] = doc['created_at'].isoformat()
     await db.waitlist.insert_one(doc)
+    return entry
+
+
+@api_router.post("/risk-assessment", response_model=RiskAssessment)
+async def create_risk_assessment(payload: RiskAssessmentCreate):
+    entry = RiskAssessment(
+        answers=payload.answers,
+        score=payload.score,
+        level=payload.level,
+        email=payload.email,
+        company=payload.company,
+    )
+    doc = entry.model_dump()
+    doc['created_at'] = doc['created_at'].isoformat()
+    await db.risk_assessments.insert_one(doc)
     return entry
 
 
