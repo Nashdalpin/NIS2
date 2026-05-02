@@ -1,5 +1,4 @@
 import Marquee from "react-fast-marquee";
-import { AlertTriangle } from "lucide-react";
 
 const items = [
   "Responsabilidade pessoal dos administradores",
@@ -22,7 +21,7 @@ export const WarningMarquee = () => (
             key={i}
             className="mx-12 flex items-center gap-3 text-[10px] font-bold uppercase tracking-[0.4em]"
           >
-            <AlertTriangle size={12} strokeWidth={2.5} />
+            <span aria-hidden className="text-base leading-none">⚠</span>
             <span>{t}</span>
           </div>
         ))}

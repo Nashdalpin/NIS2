@@ -9,10 +9,10 @@ export const Footer = () => (
       <div className="grid lg:grid-cols-12 gap-12 mb-16">
         <div className="lg:col-span-5 space-y-6">
           <div className="flex items-center gap-3">
-            <span className="w-8 h-8 border border-[#bf953f] flex items-center justify-center">
-              <span className="block w-2 h-2 bg-[#bf953f]" />
+            <span className="w-9 h-9 border border-[#bf953f] flex items-center justify-center">
+              <span className="font-cinzel text-[10px] tracking-[0.1em] text-[#bf953f]">DHS</span>
             </span>
-            <span className="font-cinzel text-base tracking-[0.35em] text-white">
+            <span className="font-cinzel text-xs md:text-sm tracking-[0.35em] text-white">
               DALPIN HERITAGE SYSTEMS
             </span>
           </div>
@@ -66,7 +66,7 @@ export const Footer = () => (
             </li>
             <li className="flex items-center gap-3">
               <Phone size={14} className="text-[#bf953f] shrink-0" />
-              <span>+351 21 000 0000</span>
+              <span>+351 934 032 320</span>
             </li>
           </ul>
         </div>

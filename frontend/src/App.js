@@ -6,13 +6,19 @@ import { Toaster } from "@/components/ui/sonner";
 import Header from "@/components/sections/Header";
 import Hero from "@/components/sections/Hero";
 import WarningMarquee from "@/components/sections/WarningMarquee";
+import TrustStrip from "@/components/sections/TrustStrip";
 import Methodology from "@/components/sections/Methodology";
+import Countdown from "@/components/sections/Countdown";
 import Risks from "@/components/sections/Risks";
+import RiskCalculator from "@/components/sections/RiskCalculator";
 import Testimonials from "@/components/sections/Testimonials";
 import FAQ from "@/components/sections/FAQ";
 import LeadCapture from "@/components/sections/LeadCapture";
 import PriorityModal from "@/components/sections/PriorityModal";
 import Footer from "@/components/sections/Footer";
+import ScrollProgress from "@/components/sections/ScrollProgress";
+import CookieConsent from "@/components/sections/CookieConsent";
+import FadeIn from "@/components/sections/FadeIn";
 
 const Landing = () => {
   const [priorityOpen, setPriorityOpen] = useState(false);
@@ -25,6 +31,7 @@ const Landing = () => {
 
   return (
     <div className="bg-[#050505] text-white min-h-screen">
+      <ScrollProgress />
       <Header onPriorityClick={() => setPriorityOpen(true)} />
       <main>
         <Hero
@@ -32,17 +39,39 @@ const Landing = () => {
           onPriorityClick={() => setPriorityOpen(true)}
         />
         <WarningMarquee />
-        <Methodology />
-        <Risks />
-        <Testimonials />
-        <FAQ />
-        <LeadCapture />
+        <FadeIn>
+          <TrustStrip />
+        </FadeIn>
+        <FadeIn>
+          <Methodology />
+        </FadeIn>
+        <FadeIn>
+          <Countdown />
+        </FadeIn>
+        <FadeIn>
+          <Risks />
+        </FadeIn>
+        <FadeIn>
+          <RiskCalculator
+            onPriorityClick={() => setPriorityOpen(true)}
+          />
+        </FadeIn>
+        <FadeIn>
+          <Testimonials />
+        </FadeIn>
+        <FadeIn>
+          <FAQ />
+        </FadeIn>
+        <FadeIn>
+          <LeadCapture />
+        </FadeIn>
       </main>
       <Footer />
       <PriorityModal
         open={priorityOpen}
         onClose={() => setPriorityOpen(false)}
       />
+      <CookieConsent />
       <Toaster
         theme="dark"
         position="bottom-right"

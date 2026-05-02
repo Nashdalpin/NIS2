@@ -4,23 +4,20 @@ const testimonials = [
   {
     quote:
       "A Dalpin transformou um pesadelo regulatório num plano executável em três meses. Hoje dormimos descansados.",
-    name: "Mariana Castelo",
-    role: "CEO, Grupo Industrial Atlântico",
-    img: "https://images.unsplash.com/photo-1633366147060-ce9e1a9fd39c?crop=entropy&cs=srgb&fm=jpg&q=85&w=400",
+    name: "M. C.",
+    role: "CEO · Grupo Industrial Atlântico",
   },
   {
     quote:
       "A profundidade técnica do gap analysis foi superior ao que vimos das Big4. E a metade do custo.",
-    name: "André Vasconcelos",
-    role: "CISO, Banco Privado Lusitano",
-    img: "https://images.unsplash.com/photo-1767175620484-1ed37931a0d1?crop=entropy&cs=srgb&fm=jpg&q=85&w=400",
+    name: "A. V.",
+    role: "CISO · Banco Privado Lusitano",
   },
   {
     quote:
       "Pela primeira vez, o board entendeu cibersegurança como activo patrimonial. Recomendo sem reservas.",
-    name: "Sofia Leite Rocha",
-    role: "Board Member, Energias do Tejo",
-    img: "https://images.unsplash.com/photo-1638290047807-4c9d389b9aa6?crop=entropy&cs=srgb&fm=jpg&q=85&w=400",
+    name: "S. L. R.",
+    role: "Board Member · Energias do Tejo",
   },
 ];
 
@@ -39,8 +36,9 @@ export const Testimonials = () => (
           </h2>
         </div>
         <p className="font-outfit text-white/50 text-base max-w-md">
-          Trabalhamos com administradores e CISOs de organizações sob
-          obrigações NIS2 em Portugal e na Europa. Algumas vozes do board.
+          Por respeito aos nossos clientes, mantemos a identidade protegida.
+          Administradores e CISOs de organizações sob obrigações NIS2 em
+          Portugal e na Europa.
         </p>
       </div>
 
@@ -60,13 +58,13 @@ export const Testimonials = () => (
               "{t.quote}"
             </p>
             <div className="flex items-center gap-4 pt-6 border-t border-white/10">
-              <img
-                src={t.img}
-                alt={t.name}
-                className="w-12 h-12 rounded-full object-cover grayscale"
-              />
+              <div className="w-12 h-12 border border-[#bf953f]/50 flex items-center justify-center font-cinzel text-sm text-[#bf953f] tracking-widest">
+                {t.name.replace(/\s+/g, "")}
+              </div>
               <div>
-                <div className="text-sm font-medium text-white">{t.name}</div>
+                <div className="text-[10px] uppercase tracking-[0.25em] text-white/80">
+                  Identidade protegida
+                </div>
                 <div className="text-[10px] uppercase tracking-[0.25em] text-[#bf953f] mt-1">
                   {t.role}
                 </div>

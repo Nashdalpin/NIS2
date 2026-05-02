@@ -34,11 +34,12 @@ export const Header = ({ onPriorityClick }) => {
           data-testid="logo-link"
           className="flex items-center gap-3 group"
         >
-          <span className="w-8 h-8 border border-[#bf953f] flex items-center justify-center">
-            <span className="block w-2 h-2 bg-[#bf953f] group-hover:scale-150 transition-transform" />
+          <span className="w-9 h-9 border border-[#bf953f] flex items-center justify-center group-hover:bg-[#bf953f]/10 transition-colors">
+            <span className="font-cinzel text-[10px] tracking-[0.1em] text-[#bf953f]">DHS</span>
           </span>
-          <span className="font-cinzel text-base tracking-[0.35em] text-white">
-            DALPIN
+          <span className="hidden sm:block font-cinzel text-[11px] md:text-xs tracking-[0.35em] text-white leading-tight">
+            DALPIN HERITAGE<br className="hidden md:block" />
+            <span className="md:hidden"> </span>SYSTEMS
           </span>
         </a>
 

@@ -57,7 +57,7 @@ export const Hero = ({ onScrollDown, onPriorityClick }) => {
           <a
             href="#captura"
             data-testid="hero-primary-cta"
-            className="group bg-white text-black py-5 px-12 font-bold text-[11px] uppercase tracking-[0.35em] hover:bg-[#bf953f] transition-all duration-500 inline-flex items-center justify-center gap-3"
+            className="group gold-bg text-black py-5 px-12 font-bold text-[11px] uppercase tracking-[0.35em] hover:brightness-110 transition-all duration-500 inline-flex items-center justify-center gap-3 shadow-[0_0_30px_rgba(191,149,63,0.25)]"
           >
             Descarregar Protocolo
             <span className="block w-6 h-px bg-black transition-all group-hover:w-10" />

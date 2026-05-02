@@ -5,21 +5,25 @@ const steps = [
     n: "01",
     title: "Gap Analysis",
     desc: "Auditoria técnica profunda. Mapeamento exaustivo de vulnerabilidades críticas e ativos sob escopo NIS2.",
+    day: "Dia 0-21",
   },
   {
     n: "02",
     title: "Plano de Resposta",
     desc: "Desenvolvimento de IRP (Incident Response Plan) em conformidade com o CNCS e ENISA.",
+    day: "Dia 22-49",
   },
   {
     n: "03",
     title: "Governance",
     desc: "Formação de executivos e definição de matrizes de responsabilidade pessoal para a Administração.",
+    day: "Dia 50-70",
   },
   {
     n: "04",
     title: "Compliance",
     desc: "Emissão da Carta de Conformidade Dalpin Heritage para apresentação a stakeholders e reguladores.",
+    day: "Dia 71-90",
   },
 ];
 
@@ -49,12 +53,11 @@ export const Methodology = () => (
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-          {steps.map((s, i) => (
+          {steps.map((s) => (
             <div
               key={s.n}
               data-testid={`step-card-${s.n}`}
               className="glass-card p-8 lg:p-10 relative overflow-hidden min-h-[220px]"
-              style={{ marginTop: i % 2 === 1 ? "32px" : "0" }}
             >
               <span className="step-number">{s.n}</span>
               <div className="relative z-10">
@@ -68,6 +71,43 @@ export const Methodology = () => (
               </div>
             </div>
           ))}
+        </div>
+      </div>
+
+      {/* Horizontal 90-day timeline */}
+      <div className="mt-20 pt-16 border-t border-white/10">
+        <div className="flex items-center justify-between mb-8">
+          <p className="micro-label text-[9px]">Cronograma</p>
+          <p className="text-[10px] uppercase tracking-[0.3em] text-white/40">
+            90 Dias · 4 Fases
+          </p>
+        </div>
+
+        {/* Timeline bar */}
+        <div className="relative mt-10">
+          <div className="absolute left-0 right-0 top-2.5 h-px bg-white/10" />
+          <div className="absolute left-0 top-2.5 h-px bg-[#bf953f]/60" style={{ width: "100%" }} />
+          <div className="grid grid-cols-4 relative">
+            {steps.map((s) => (
+              <div
+                key={s.n}
+                data-testid={`timeline-${s.n}`}
+                className="flex flex-col items-start gap-4"
+              >
+                <div className="w-5 h-5 border border-[#bf953f] bg-[#050505] rounded-full flex items-center justify-center">
+                  <span className="w-1.5 h-1.5 bg-[#bf953f] rounded-full" />
+                </div>
+                <div className="pr-4">
+                  <p className="text-[10px] uppercase tracking-[0.3em] text-[#bf953f] mb-1">
+                    {s.day}
+                  </p>
+                  <p className="font-cinzel text-sm md:text-base text-white">
+                    {s.title}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
