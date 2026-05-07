@@ -103,7 +103,7 @@ export const Risks = () => {
             <div
               key={r.title}
               data-testid={`risk-card-${r.title.toLowerCase().replace(/\s+/g, "-")}`}
-              className="text-center md:text-left space-y-6 group flex-shrink-0 md:flex-shrink min-w-[100%] md:min-w-0 snap-center md:snap-align-none"
+              className="text-center md:text-left space-y-6 group flex-shrink-0 w-full md:w-auto basis-full md:basis-auto min-w-0 snap-center md:snap-align-none"
             >
               <div
                 className={`w-14 h-14 border rounded-full flex items-center justify-center mx-auto md:mx-0 transition-all ${

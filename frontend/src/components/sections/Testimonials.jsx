@@ -73,7 +73,7 @@ export const Testimonials = () => {
           <article
             key={i}
             data-testid={`testimonial-${i}`}
-            className="group glass-card p-6 md:p-8 lg:p-10 flex flex-col justify-between md:min-h-[420px] relative overflow-hidden flex-shrink-0 md:flex-shrink min-w-[88%] md:min-w-0 snap-center md:snap-align-none"
+            className="group glass-card p-6 md:p-8 lg:p-10 flex flex-col justify-between md:min-h-[420px] relative overflow-hidden flex-shrink-0 w-[88%] md:w-auto basis-[88%] md:basis-auto min-w-0 snap-center md:snap-align-none"
           >
             <Corners />
             <span

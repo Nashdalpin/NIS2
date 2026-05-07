@@ -48,7 +48,7 @@ export const Methodology = () => {
   return (
   <section id="metodologia" data-testid="methodology-section" className="py-16 md:py-24 lg:py-32 px-5 sm:px-6">
     <div className="max-w-7xl mx-auto">
-      <div className="grid lg:grid-cols-2 gap-10 md:gap-16 lg:gap-20 items-start mb-12 md:mb-20">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16 lg:gap-20 items-start mb-12 md:mb-20 min-w-0">
         <div>
           <p className="micro-label mb-5 md:mb-6 flex items-center gap-3">
             <span className="font-cinzel tracking-[0.2em] text-[#bf953f]/70">I</span>
@@ -109,7 +109,7 @@ export const Methodology = () => {
               <div
                 key={s.n}
                 data-testid={`step-card-${s.n}`}
-                className="group glass-card p-6 md:p-8 lg:p-10 relative overflow-hidden min-h-[180px] md:min-h-[220px] flex-shrink-0 sm:flex-shrink min-w-[82%] sm:min-w-0 snap-start sm:snap-align-none"
+                className="group glass-card p-6 md:p-8 lg:p-10 relative overflow-hidden min-h-[180px] md:min-h-[220px] flex-shrink-0 sm:flex-shrink-0 w-[82%] sm:w-auto basis-[82%] sm:basis-auto min-w-0 snap-start sm:snap-align-none"
               >
                 <Corners />
                 <span className="step-number">{s.n}</span>

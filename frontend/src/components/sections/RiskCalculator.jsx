@@ -262,7 +262,7 @@ export const RiskCalculator = ({ onRequestReport, onPriorityClick }) => {
     <section
       id="calculadora"
       data-testid="risk-calculator-section"
-      className="py-16 md:py-24 lg:py-32 px-5 sm:px-6 relative overflow-hidden"
+      className="py-16 md:py-24 lg:py-32 px-5 sm:px-6 relative overflow-hidden isolate"
     >
       <div
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[900px] -z-10 opacity-40 pointer-events-none"
