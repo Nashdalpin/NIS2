@@ -63,7 +63,7 @@ export const Hero = ({ onScrollDown, onPriorityClick }) => {
             <span className="block w-6 h-px bg-black transition-all group-hover:w-10" />
           </a>
           <a
-            href="https://calendly.com/dalpinheritage/nis2-readiness"
+            href="https://book.morgen.so/nashdalpin791/nas"
             target="_blank"
             rel="noreferrer"
             data-testid="hero-calendly-cta"
