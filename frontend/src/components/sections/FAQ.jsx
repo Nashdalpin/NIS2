@@ -36,12 +36,12 @@ export const FAQ = () => (
   <section
     id="faq"
     data-testid="faq-section"
-    className="py-24 lg:py-32 px-6 bg-[#0a0a0a] border-y border-white/5"
+    className="py-16 md:py-24 lg:py-32 px-5 sm:px-6 bg-[#0a0a0a] border-y border-white/5"
   >
     <div className="max-w-4xl mx-auto">
-      <div className="text-center mb-16">
-        <p className="micro-label mb-6">Dúvidas Recorrentes do Board</p>
-        <h2 className="font-cinzel text-4xl md:text-5xl lg:text-6xl leading-[1.1] tracking-tight">
+      <div className="text-center mb-10 md:mb-16">
+        <p className="micro-label mb-5 md:mb-6">Dúvidas Recorrentes do Board</p>
+        <h2 className="font-cinzel text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.1] tracking-tight">
           Respostas <span className="gold-text">precisas</span>.
         </h2>
       </div>
@@ -52,17 +52,17 @@ export const FAQ = () => (
             key={i}
             value={`item-${i}`}
             data-testid={`faq-item-${i}`}
-            className="border-b border-white/10 px-2"
+            className="border-b border-white/10 px-1 sm:px-2"
           >
-            <AccordionTrigger className="font-cinzel text-left text-base md:text-lg text-white hover:text-[#bf953f] py-6 transition-colors no-underline hover:no-underline">
-              <span className="flex items-baseline gap-5">
-                <span className="text-[10px] tracking-[0.3em] text-[#bf953f]/70">
+            <AccordionTrigger className="font-cinzel text-left text-sm sm:text-base md:text-lg text-white hover:text-[#bf953f] py-5 md:py-6 transition-colors no-underline hover:no-underline">
+              <span className="flex items-baseline gap-3 sm:gap-5">
+                <span className="text-[10px] tracking-[0.3em] text-[#bf953f]/70 shrink-0">
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 <span>{f.q}</span>
               </span>
             </AccordionTrigger>
-            <AccordionContent className="font-outfit text-white/60 text-base leading-relaxed pl-12 pb-6">
+            <AccordionContent className="font-outfit text-white/60 text-sm sm:text-base leading-relaxed pl-7 sm:pl-12 pb-5 md:pb-6">
               {f.a}
             </AccordionContent>
           </AccordionItem>

@@ -22,19 +22,19 @@ export const Risks = () => (
   <section
     id="riscos"
     data-testid="risks-section"
-    className="py-24 lg:py-32 bg-[#0a0a0a] border-y border-white/5"
+    className="py-16 md:py-24 lg:py-32 bg-[#0a0a0a] border-y border-white/5"
   >
-    <div className="max-w-5xl mx-auto px-6 text-center mb-20">
-      <p className="micro-label mb-6">Os Custos da Negligência</p>
-      <h2 className="font-cinzel text-3xl md:text-5xl lg:text-6xl leading-[1.15] italic max-w-4xl mx-auto">
+    <div className="max-w-5xl mx-auto px-5 sm:px-6 text-center mb-12 md:mb-20">
+      <p className="micro-label mb-5 md:mb-6">Os Custos da Negligência</p>
+      <h2 className="font-cinzel text-2xl sm:text-3xl md:text-5xl lg:text-6xl leading-[1.15] italic max-w-4xl mx-auto">
         "A paz de espírito custa menos
         <br />
         que a <span className="gold-text not-italic">negligência</span>."
       </h2>
-      <div className="h-px w-24 bg-[#bf953f]/60 mx-auto mt-12" />
+      <div className="h-px w-20 sm:w-24 bg-[#bf953f]/60 mx-auto mt-8 md:mt-12" />
     </div>
 
-    <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-3 gap-12 lg:gap-16">
+    <div className="max-w-6xl mx-auto px-5 sm:px-6 grid md:grid-cols-3 gap-10 md:gap-12 lg:gap-16">
       {risks.map((r) => {
         const Icon = r.icon;
         return (

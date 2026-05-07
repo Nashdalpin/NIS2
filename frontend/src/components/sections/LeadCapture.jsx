@@ -37,8 +37,8 @@ export const LeadCapture = () => {
   };
 
   return (
-    <section id="captura" data-testid="capture-section" className="py-24 lg:py-32 px-6">
-      <div className="max-w-6xl mx-auto glass-card p-10 md:p-16 lg:p-20 border-[#bf953f]/20 relative overflow-hidden">
+    <section id="captura" data-testid="capture-section" className="py-16 md:py-24 lg:py-32 px-5 sm:px-6">
+      <div className="max-w-6xl mx-auto glass-card p-6 sm:p-10 md:p-16 lg:p-20 border-[#bf953f]/20 relative overflow-hidden">
         <div
           className="absolute -top-20 -right-20 w-96 h-96 rounded-full opacity-30 pointer-events-none"
           style={{
@@ -48,15 +48,15 @@ export const LeadCapture = () => {
           }}
         />
 
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center relative z-10">
-          <div className="space-y-8">
+        <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-20 items-center relative z-10">
+          <div className="space-y-6 sm:space-y-8">
             <p className="micro-label">Recurso Confidencial</p>
-            <h2 className="font-cinzel text-3xl md:text-5xl leading-[1.1] tracking-tight">
+            <h2 className="font-cinzel text-2xl sm:text-3xl md:text-5xl leading-[1.1] tracking-tight">
               O Guia Prático
               <br />
               para o <span className="gold-text">Board</span>.
             </h2>
-            <p className="font-outfit text-white/60 text-base md:text-lg font-light leading-relaxed max-w-md">
+            <p className="font-outfit text-white/60 text-sm sm:text-base md:text-lg font-light leading-relaxed max-w-md">
               Receba a Checklist Executiva NIS2: os 10 requisitos que o seu
               CISO deve validar hoje mesmo. Documento entregue por email.
             </p>
@@ -68,9 +68,9 @@ export const LeadCapture = () => {
               ].map((t) => (
                 <li
                   key={t}
-                  className="flex items-center gap-3 text-[11px] tracking-[0.3em] uppercase text-[#bf953f]"
+                  className="flex items-center gap-3 text-[10px] sm:text-[11px] tracking-[0.25em] sm:tracking-[0.3em] uppercase text-[#bf953f]"
                 >
-                  <span className="w-1.5 h-1.5 bg-[#bf953f] rounded-full" />
+                  <span className="w-1.5 h-1.5 bg-[#bf953f] rounded-full shrink-0" />
                   {t}
                 </li>
               ))}
@@ -109,7 +109,7 @@ export const LeadCapture = () => {
                 value={form.name}
                 onChange={onChange}
                 data-testid="lead-form-name"
-                className="bg-white/5 border border-white/10 px-5 py-5 w-full focus:border-[#bf953f] focus:bg-white/[0.07] outline-none transition-all text-sm placeholder:text-white/30"
+                className="bg-white/5 border border-white/10 px-4 py-4 sm:px-5 sm:py-5 w-full focus:border-[#bf953f] focus:bg-white/[0.07] outline-none transition-all text-sm placeholder:text-white/30"
               />
               <input
                 name="email"
@@ -119,7 +119,7 @@ export const LeadCapture = () => {
                 value={form.email}
                 onChange={onChange}
                 data-testid="lead-form-email"
-                className="bg-white/5 border border-white/10 px-5 py-5 w-full focus:border-[#bf953f] focus:bg-white/[0.07] outline-none transition-all text-sm placeholder:text-white/30"
+                className="bg-white/5 border border-white/10 px-4 py-4 sm:px-5 sm:py-5 w-full focus:border-[#bf953f] focus:bg-white/[0.07] outline-none transition-all text-sm placeholder:text-white/30"
               />
               <input
                 name="role"
@@ -129,13 +129,13 @@ export const LeadCapture = () => {
                 value={form.role}
                 onChange={onChange}
                 data-testid="lead-form-role"
-                className="bg-white/5 border border-white/10 px-5 py-5 w-full focus:border-[#bf953f] focus:bg-white/[0.07] outline-none transition-all text-sm placeholder:text-white/30"
+                className="bg-white/5 border border-white/10 px-4 py-4 sm:px-5 sm:py-5 w-full focus:border-[#bf953f] focus:bg-white/[0.07] outline-none transition-all text-sm placeholder:text-white/30"
               />
               <button
                 type="submit"
                 disabled={loading}
                 data-testid="lead-form-submit"
-                className="w-full gold-bg text-black font-bold py-5 uppercase tracking-[0.3em] hover:brightness-110 transition-all text-xs disabled:opacity-50 inline-flex items-center justify-center gap-3"
+                className="w-full gold-bg text-black font-bold py-4 sm:py-5 uppercase tracking-[0.25em] sm:tracking-[0.3em] hover:brightness-110 transition-all text-[11px] sm:text-xs disabled:opacity-50 inline-flex items-center justify-center gap-3"
               >
                 {loading ? (
                   <>

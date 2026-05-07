@@ -28,18 +28,17 @@ export const Header = ({ onPriorityClick }) => {
           : "bg-transparent"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-6 lg:px-10 flex items-center justify-between h-20">
+      <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-10 flex items-center justify-between h-16 md:h-20">
         <a
           href="#top"
           data-testid="logo-link"
-          className="flex items-center gap-3 group"
+          className="flex items-center gap-2.5 sm:gap-3 group min-w-0"
         >
-          <span className="w-9 h-9 border border-[#bf953f] flex items-center justify-center group-hover:bg-[#bf953f]/10 transition-colors">
-            <span className="font-cinzel text-[10px] tracking-[0.1em] text-[#bf953f]">DHS</span>
+          <span className="w-8 h-8 sm:w-9 sm:h-9 border border-[#bf953f] flex items-center justify-center group-hover:bg-[#bf953f]/10 transition-colors shrink-0">
+            <span className="font-cinzel text-[9px] sm:text-[10px] tracking-[0.1em] text-[#bf953f]">DHS</span>
           </span>
-          <span className="hidden sm:block font-cinzel text-[11px] md:text-xs tracking-[0.35em] text-white leading-tight">
-            DALPIN HERITAGE<br className="hidden md:block" />
-            <span className="md:hidden"> </span>SYSTEMS
+          <span className="hidden sm:block font-cinzel text-[10px] md:text-xs tracking-[0.25em] md:tracking-[0.35em] text-white leading-tight whitespace-nowrap">
+            DALPIN HERITAGE SYSTEMS
           </span>
         </a>
 

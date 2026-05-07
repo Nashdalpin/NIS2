@@ -231,7 +231,7 @@ export const RiskCalculator = ({ onRequestReport, onPriorityClick }) => {
     <section
       id="calculadora"
       data-testid="risk-calculator-section"
-      className="py-24 lg:py-32 px-6 relative overflow-hidden"
+      className="py-16 md:py-24 lg:py-32 px-5 sm:px-6 relative overflow-hidden"
     >
       <div
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[900px] -z-10 opacity-40 pointer-events-none"
@@ -243,20 +243,20 @@ export const RiskCalculator = ({ onRequestReport, onPriorityClick }) => {
       />
 
       <div className="max-w-5xl mx-auto">
-        <div className="text-center mb-14">
-          <p className="micro-label mb-6">Diagnóstico em 60 Segundos</p>
-          <h2 className="font-cinzel text-4xl md:text-5xl lg:text-6xl leading-[1.1] tracking-tight">
+        <div className="text-center mb-10 md:mb-14">
+          <p className="micro-label mb-5 md:mb-6">Diagnóstico em 60 Segundos</p>
+          <h2 className="font-cinzel text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.1] tracking-tight">
             Calculadora de <span className="gold-text">Exposição NIS2</span>.
           </h2>
-          <p className="font-outfit text-white/55 text-base md:text-lg max-w-2xl mx-auto mt-6">
+          <p className="font-outfit text-white/55 text-sm sm:text-base md:text-lg max-w-2xl mx-auto mt-5 md:mt-6">
             Sete perguntas. Resultado imediato. Confidencial.
           </p>
         </div>
 
-        <div className="glass-card border-[#bf953f]/20 p-8 md:p-14 lg:p-16 relative">
+        <div className="glass-card border-[#bf953f]/20 p-6 sm:p-8 md:p-14 lg:p-16 relative">
           {/* Progress bar */}
           {step >= 0 && (
-            <div className="mb-10">
+            <div className="mb-7 md:mb-10">
               <div className="flex items-center justify-between mb-3">
                 <span className="text-[10px] uppercase tracking-[0.4em] text-[#bf953f]">
                   {isResult
@@ -278,16 +278,16 @@ export const RiskCalculator = ({ onRequestReport, onPriorityClick }) => {
 
           {/* INTRO */}
           {step === -1 && (
-            <div className="text-center space-y-8 py-8">
+            <div className="text-center space-y-6 md:space-y-8 py-4 md:py-8">
               <ShieldAlert
-                size={48}
+                size={42}
                 strokeWidth={1.2}
                 className="text-[#bf953f] mx-auto"
               />
-              <h3 className="font-cinzel text-2xl md:text-3xl">
+              <h3 className="font-cinzel text-xl sm:text-2xl md:text-3xl">
                 Quão exposto está o seu board?
               </h3>
-              <p className="font-outfit text-white/55 max-w-xl mx-auto leading-relaxed">
+              <p className="font-outfit text-white/55 text-sm sm:text-base max-w-xl mx-auto leading-relaxed">
                 Avaliamos sete dimensões críticas: sector, dimensão, governance,
                 detecção, auditoria, IRP e cadeia de fornecedores.
                 Sem registo. Sem email. Apenas o seu score.
@@ -295,7 +295,7 @@ export const RiskCalculator = ({ onRequestReport, onPriorityClick }) => {
               <button
                 onClick={() => setStep(0)}
                 data-testid="risk-start-btn"
-                className="bg-[#bf953f] text-black font-bold py-5 px-12 uppercase tracking-[0.35em] text-[11px] hover:bg-white transition-all inline-flex items-center gap-3"
+                className="bg-[#bf953f] text-black font-bold py-4 sm:py-5 px-8 sm:px-12 uppercase tracking-[0.3em] sm:tracking-[0.35em] text-[11px] hover:bg-white transition-all inline-flex items-center gap-3"
               >
                 Começar Diagnóstico
                 <ArrowRight size={14} />
@@ -305,15 +305,15 @@ export const RiskCalculator = ({ onRequestReport, onPriorityClick }) => {
 
           {/* QUESTION */}
           {current && (
-            <div data-testid={`risk-question-${step}`} className="space-y-8">
+            <div data-testid={`risk-question-${step}`} className="space-y-6 md:space-y-8">
               <div className="space-y-3">
                 <p className="micro-label text-[9px]">
                   {String(step + 1).padStart(2, "0")} / {String(QUESTIONS.length).padStart(2, "0")}
                 </p>
-                <h3 className="font-cinzel text-2xl md:text-3xl leading-tight">
+                <h3 className="font-cinzel text-xl sm:text-2xl md:text-3xl leading-tight">
                   {current.label}
                 </h3>
-                <p className="text-white/45 text-sm">{current.hint}</p>
+                <p className="text-white/45 text-xs sm:text-sm">{current.hint}</p>
               </div>
               <div className="grid sm:grid-cols-2 gap-3">
                 {current.options.map((opt) => {
@@ -323,7 +323,7 @@ export const RiskCalculator = ({ onRequestReport, onPriorityClick }) => {
                       key={opt.value}
                       onClick={() => select(current.id, opt.value)}
                       data-testid={`risk-option-${current.id}-${opt.value}`}
-                      className={`text-left px-6 py-5 border transition-all duration-300 group ${
+                      className={`text-left px-5 py-4 sm:px-6 sm:py-5 border transition-all duration-300 group ${
                         active
                           ? "border-[#bf953f] bg-[#bf953f]/10"
                           : "border-white/10 hover:border-[#bf953f]/60 hover:bg-white/5"
@@ -334,16 +334,17 @@ export const RiskCalculator = ({ onRequestReport, onPriorityClick }) => {
                   );
                 })}
               </div>
-              <div className="flex items-center justify-between pt-4">
+              <div className="flex items-center justify-between pt-3 md:pt-4 gap-3">
                 <button
                   onClick={() => setStep((s) => Math.max(-1, s - 1))}
-                  className="text-[10px] uppercase tracking-[0.3em] text-white/40 hover:text-[#bf953f] inline-flex items-center gap-2"
+                  className="text-[10px] uppercase tracking-[0.3em] text-white/40 hover:text-[#bf953f] inline-flex items-center gap-2 shrink-0"
                 >
                   <ArrowLeft size={12} />
                   Anterior
                 </button>
-                <span className="text-[10px] uppercase tracking-[0.3em] text-white/30">
-                  As respostas avançam automaticamente
+                <span className="text-[9px] sm:text-[10px] uppercase tracking-[0.2em] sm:tracking-[0.3em] text-white/30 text-right">
+                  <span className="hidden sm:inline">As respostas avançam automaticamente</span>
+                  <span className="sm:hidden">Avança automaticamente</span>
                 </span>
               </div>
             </div>
@@ -351,13 +352,13 @@ export const RiskCalculator = ({ onRequestReport, onPriorityClick }) => {
 
           {/* EMAIL GATE — captures lead before showing score */}
           {isGate && (
-            <div data-testid="risk-gate" className="space-y-8 py-2">
+            <div data-testid="risk-gate" className="space-y-6 md:space-y-8 py-2">
               <div className="text-center space-y-3">
                 <p className="micro-label text-[9px]">Última Etapa</p>
-                <h3 className="font-cinzel text-2xl md:text-3xl leading-tight">
+                <h3 className="font-cinzel text-xl sm:text-2xl md:text-3xl leading-tight">
                   O seu diagnóstico está <span className="gold-text">pronto</span>.
                 </h3>
-                <p className="font-outfit text-white/60 max-w-xl mx-auto leading-relaxed">
+                <p className="font-outfit text-white/60 text-sm sm:text-base max-w-xl mx-auto leading-relaxed">
                   Receba o relatório completo por email com o score, nível
                   de risco e recomendações personalizadas para o seu sector.
                 </p>
@@ -372,7 +373,7 @@ export const RiskCalculator = ({ onRequestReport, onPriorityClick }) => {
                   value={gate.name}
                   onChange={(e) => setGate({ ...gate, name: e.target.value })}
                   data-testid="risk-gate-name"
-                  className="bg-white/5 border border-white/10 px-5 py-4 w-full focus:border-[#bf953f] outline-none text-sm placeholder:text-white/30"
+                  className="bg-white/5 border border-white/10 px-4 py-3.5 sm:px-5 sm:py-4 w-full focus:border-[#bf953f] outline-none text-sm placeholder:text-white/30"
                 />
                 <input
                   type="email"
@@ -381,7 +382,7 @@ export const RiskCalculator = ({ onRequestReport, onPriorityClick }) => {
                   value={gate.email}
                   onChange={(e) => setGate({ ...gate, email: e.target.value })}
                   data-testid="risk-gate-email"
-                  className="bg-white/5 border border-white/10 px-5 py-4 w-full focus:border-[#bf953f] outline-none text-sm placeholder:text-white/30"
+                  className="bg-white/5 border border-white/10 px-4 py-3.5 sm:px-5 sm:py-4 w-full focus:border-[#bf953f] outline-none text-sm placeholder:text-white/30"
                 />
                 <input
                   type="text"
@@ -389,7 +390,7 @@ export const RiskCalculator = ({ onRequestReport, onPriorityClick }) => {
                   value={gate.company}
                   onChange={(e) => setGate({ ...gate, company: e.target.value })}
                   data-testid="risk-gate-company"
-                  className="bg-white/5 border border-white/10 px-5 py-4 w-full focus:border-[#bf953f] outline-none text-sm placeholder:text-white/30"
+                  className="bg-white/5 border border-white/10 px-4 py-3.5 sm:px-5 sm:py-4 w-full focus:border-[#bf953f] outline-none text-sm placeholder:text-white/30"
                 />
                 <button
                   type="submit"
@@ -415,24 +416,24 @@ export const RiskCalculator = ({ onRequestReport, onPriorityClick }) => {
 
           {/* RESULT */}
           {isResult && (
-            <div data-testid="risk-result" className="space-y-10 py-4">
-              <div className="text-center space-y-6">
+            <div data-testid="risk-result" className="space-y-7 md:space-y-10 py-2 md:py-4">
+              <div className="text-center space-y-5 md:space-y-6">
                 <p className="micro-label text-[9px]">O Seu Score NIS2</p>
                 <Gauge score={score} color={level.color} />
                 <div className="space-y-3">
                   <div
-                    className="font-cinzel text-3xl md:text-4xl"
+                    className="font-cinzel text-2xl sm:text-3xl md:text-4xl"
                     style={{ color: level.color }}
                   >
                     Risco {level.label}
                   </div>
-                  <p className="font-outfit text-white/65 max-w-xl mx-auto leading-relaxed">
+                  <p className="font-outfit text-white/65 text-sm sm:text-base max-w-xl mx-auto leading-relaxed">
                     {DIAGNOSIS[level.key]}
                   </p>
                 </div>
               </div>
 
-              <div className="grid md:grid-cols-2 gap-3 pt-4">
+              <div className="grid md:grid-cols-2 gap-3 pt-2 md:pt-4">
                 <button
                   onClick={() =>
                     onRequestReport?.() ||
@@ -441,7 +442,7 @@ export const RiskCalculator = ({ onRequestReport, onPriorityClick }) => {
                       ?.scrollIntoView({ behavior: "smooth" })
                   }
                   data-testid="risk-cta-report"
-                  className="bg-[#bf953f] text-black font-bold py-5 px-8 uppercase tracking-[0.3em] text-[11px] hover:bg-white transition-all inline-flex items-center justify-center gap-3"
+                  className="bg-[#bf953f] text-black font-bold py-4 sm:py-5 px-6 sm:px-8 uppercase tracking-[0.25em] sm:tracking-[0.3em] text-[10px] sm:text-[11px] hover:bg-white transition-all inline-flex items-center justify-center gap-3"
                 >
                   Receber Relatório Completo
                   <ArrowRight size={14} />
@@ -449,7 +450,7 @@ export const RiskCalculator = ({ onRequestReport, onPriorityClick }) => {
                 <button
                   onClick={onPriorityClick}
                   data-testid="risk-cta-priority"
-                  className="border border-white/20 text-white font-bold py-5 px-8 uppercase tracking-[0.3em] text-[11px] hover:border-[#bf953f] hover:text-[#bf953f] transition-all"
+                  className="border border-white/20 text-white font-bold py-4 sm:py-5 px-6 sm:px-8 uppercase tracking-[0.25em] sm:tracking-[0.3em] text-[10px] sm:text-[11px] hover:border-[#bf953f] hover:text-[#bf953f] transition-all"
                 >
                   Falar com Especialista
                 </button>

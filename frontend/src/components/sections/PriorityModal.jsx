@@ -45,7 +45,7 @@ export const PriorityModal = ({ open, onClose }) => {
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="bg-[#0a0a0a] p-10 md:p-14 max-w-2xl w-full text-center border border-[#bf953f]/30 relative overflow-hidden"
+        className="bg-[#0a0a0a] p-6 sm:p-10 md:p-14 max-w-2xl w-full text-center border border-[#bf953f]/30 relative overflow-hidden max-h-[92vh] overflow-y-auto"
       >
         <div
           className="absolute -top-32 left-1/2 -translate-x-1/2 w-[500px] h-[500px] rounded-full opacity-30 pointer-events-none"
@@ -66,15 +66,15 @@ export const PriorityModal = ({ open, onClose }) => {
         </button>
 
         <div className="relative z-10">
-          <div className="text-[10px] uppercase tracking-[0.5em] text-[#bf953f] font-bold mb-6">
+          <div className="text-[9px] sm:text-[10px] uppercase tracking-[0.4em] sm:tracking-[0.5em] text-[#bf953f] font-bold mb-5 md:mb-6">
             Vagas Limitadas · T2 2026
           </div>
-          <h3 className="font-cinzel text-3xl md:text-4xl mb-6 gold-text leading-tight">
+          <h3 className="font-cinzel text-2xl sm:text-3xl md:text-4xl mb-5 md:mb-6 gold-text leading-tight">
             Lista de Espera
             <br />
             Priority Audit
           </h3>
-          <p className="font-outfit text-white/60 mb-8 leading-relaxed max-w-md mx-auto">
+          <p className="font-outfit text-sm sm:text-base text-white/60 mb-6 md:mb-8 leading-relaxed max-w-md mx-auto">
             Devido ao elevado rigor técnico do nosso{" "}
             <span className="text-white">Readiness Assessment</span>, aceitamos
             apenas <strong className="text-white">3 organizações por mês</strong>{" "}
