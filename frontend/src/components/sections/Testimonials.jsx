@@ -1,3 +1,4 @@
+import { useRef, useState } from "react";
 import { Quote } from "lucide-react";
 import { Corners } from "./Ornaments";
 
@@ -22,7 +23,23 @@ const testimonials = [
   },
 ];
 
-export const Testimonials = () => (
+export const Testimonials = () => {
+  const [active, setActive] = useState(0);
+  const ref = useRef(null);
+
+  const onScroll = (e) => {
+    const el = e.currentTarget;
+    const idx = Math.round(el.scrollLeft / el.clientWidth);
+    setActive(Math.min(idx, testimonials.length - 1));
+  };
+
+  const goTo = (i) => {
+    const el = ref.current;
+    if (!el) return;
+    el.scrollTo({ left: i * el.clientWidth, behavior: "smooth" });
+  };
+
+  return (
   <section
     id="testemunhos"
     data-testid="testimonials-section"
@@ -47,12 +64,16 @@ export const Testimonials = () => (
         </p>
       </div>
 
-      <div className="grid md:grid-cols-3 gap-4 md:gap-6">
+      <div
+        ref={ref}
+        onScroll={onScroll}
+        className="flex md:grid md:grid-cols-3 gap-4 md:gap-6 overflow-x-auto md:overflow-visible snap-x snap-mandatory md:snap-none -mx-5 sm:-mx-6 md:mx-0 px-5 sm:px-6 md:px-0 pb-2 md:pb-0 no-scrollbar"
+      >
         {testimonials.map((t, i) => (
           <article
             key={i}
             data-testid={`testimonial-${i}`}
-            className="group glass-card p-6 md:p-8 lg:p-10 flex flex-col justify-between md:min-h-[420px] relative overflow-hidden"
+            className="group glass-card p-6 md:p-8 lg:p-10 flex flex-col justify-between md:min-h-[420px] relative overflow-hidden flex-shrink-0 md:flex-shrink min-w-[88%] md:min-w-0 snap-center md:snap-align-none"
           >
             <Corners />
             <span
@@ -85,8 +106,25 @@ export const Testimonials = () => (
           </article>
         ))}
       </div>
+
+      {/* Mobile: gold pill pagination */}
+      <div className="flex md:hidden items-center justify-center gap-2 mt-7">
+        {testimonials.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => goTo(i)}
+            aria-label={`Testemunho ${i + 1}`}
+            className={`h-1 rounded-full transition-all duration-500 ${
+              active === i
+                ? "w-10 bg-[#bf953f] shadow-[0_0_8px_rgba(191,149,63,0.5)]"
+                : "w-2 bg-white/15 hover:bg-white/30"
+            }`}
+          />
+        ))}
+      </div>
     </div>
   </section>
-);
+  );
+};
 
 export default Testimonials;

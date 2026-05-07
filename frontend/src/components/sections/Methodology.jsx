@@ -1,3 +1,4 @@
+import { useRef, useState } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { Corners } from "./Ornaments";
 
@@ -28,7 +29,23 @@ const steps = [
   },
 ];
 
-export const Methodology = () => (
+export const Methodology = () => {
+  const [activePhase, setActivePhase] = useState(0);
+  const phasesRef = useRef(null);
+
+  const handlePhaseScroll = (e) => {
+    const el = e.currentTarget;
+    const idx = Math.round(el.scrollLeft / el.clientWidth);
+    setActivePhase(Math.min(idx, steps.length - 1));
+  };
+
+  const goToPhase = (i) => {
+    const el = phasesRef.current;
+    if (!el) return;
+    el.scrollTo({ left: i * el.clientWidth, behavior: "smooth" });
+  };
+
+  return (
   <section id="metodologia" data-testid="methodology-section" className="py-16 md:py-24 lg:py-32 px-5 sm:px-6">
     <div className="max-w-7xl mx-auto">
       <div className="grid lg:grid-cols-2 gap-10 md:gap-16 lg:gap-20 items-start mb-12 md:mb-20">
@@ -57,26 +74,57 @@ export const Methodology = () => (
           </a>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-5">
-          {steps.map((s) => (
-            <div
-              key={s.n}
-              data-testid={`step-card-${s.n}`}
-              className="group glass-card p-6 md:p-8 lg:p-10 relative overflow-hidden min-h-[180px] md:min-h-[220px]"
-            >
-              <Corners />
-              <span className="step-number">{s.n}</span>
-              <div className="relative z-10">
-                <p className="micro-label mb-3 md:mb-4 text-[9px]">Fase {s.n}</p>
-                <h3 className="font-cinzel text-lg md:text-xl text-white mb-3 md:mb-4">
-                  {s.title}
-                </h3>
-                <p className="font-outfit text-sm text-white/55 leading-relaxed">
-                  {s.desc}
-                </p>
+        <div>
+          {/* Mobile: numbered pagination */}
+          <div className="flex sm:hidden items-center justify-center gap-5 mb-5">
+            {steps.map((s, i) => (
+              <button
+                key={s.n}
+                onClick={() => goToPhase(i)}
+                aria-label={`Fase ${s.n}`}
+                className="group/p flex flex-col items-center gap-1.5"
+              >
+                <span
+                  className={`font-cinzel text-xs tabular-nums tracking-[0.15em] transition-colors ${
+                    activePhase === i ? "text-[#bf953f]" : "text-white/30"
+                  }`}
+                >
+                  {s.n}
+                </span>
+                <span
+                  className={`h-px transition-all duration-500 ${
+                    activePhase === i ? "w-8 bg-[#bf953f]" : "w-4 bg-white/15"
+                  }`}
+                />
+              </button>
+            ))}
+          </div>
+
+          <div
+            ref={phasesRef}
+            onScroll={handlePhaseScroll}
+            className="flex sm:grid sm:grid-cols-2 gap-4 md:gap-5 overflow-x-auto sm:overflow-visible snap-x snap-mandatory sm:snap-none -mx-5 sm:mx-0 px-5 sm:px-0 pb-3 sm:pb-0 no-scrollbar"
+          >
+            {steps.map((s) => (
+              <div
+                key={s.n}
+                data-testid={`step-card-${s.n}`}
+                className="group glass-card p-6 md:p-8 lg:p-10 relative overflow-hidden min-h-[180px] md:min-h-[220px] flex-shrink-0 sm:flex-shrink min-w-[82%] sm:min-w-0 snap-start sm:snap-align-none"
+              >
+                <Corners />
+                <span className="step-number">{s.n}</span>
+                <div className="relative z-10">
+                  <p className="micro-label mb-3 md:mb-4 text-[9px]">Fase {s.n}</p>
+                  <h3 className="font-cinzel text-lg md:text-xl text-white mb-3 md:mb-4">
+                    {s.title}
+                  </h3>
+                  <p className="font-outfit text-sm text-white/55 leading-relaxed">
+                    {s.desc}
+                  </p>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
 
@@ -129,6 +177,7 @@ export const Methodology = () => (
       </div>
     </div>
   </section>
-);
+  );
+};
 
 export default Methodology;
