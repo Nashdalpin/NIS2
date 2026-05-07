@@ -112,6 +112,14 @@ export const Methodology = () => (
             </div>
           </div>
         </div>
+
+        {/* Visual cue for mobile scrolling */}
+        <div className="flex lg:hidden items-center gap-2 mt-6 text-white/30 text-[9px] uppercase tracking-[0.3em] justify-center animate-pulse">
+          <span className="w-8 h-px bg-white/10" />
+          <span>Deslize para navegar</span>
+          <ArrowUpRight size={10} className="rotate-90 opacity-50" />
+          <span className="w-8 h-px bg-white/10" />
+        </div>
       </div>
     </div>
   </section>
