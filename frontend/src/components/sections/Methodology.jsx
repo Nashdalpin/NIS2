@@ -83,30 +83,33 @@ export const Methodology = () => (
           </p>
         </div>
 
-        {/* Timeline bar */}
-        <div className="relative mt-10">
-          <div className="absolute left-0 right-0 top-2.5 h-px bg-white/10" />
-          <div className="absolute left-0 top-2.5 h-px bg-[#bf953f]/60" style={{ width: "100%" }} />
-          <div className="grid grid-cols-4 relative">
-            {steps.map((s) => (
-              <div
-                key={s.n}
-                data-testid={`timeline-${s.n}`}
-                className="flex flex-col items-start gap-4"
-              >
-                <div className="w-5 h-5 border border-[#bf953f] bg-[#050505] rounded-full flex items-center justify-center">
-                  <span className="w-1.5 h-1.5 bg-[#bf953f] rounded-full" />
+        {/* Timeline bar - Scrollable on mobile */}
+        <div className="relative mt-10 overflow-x-auto no-scrollbar pb-4 -mx-6 px-6 lg:mx-0 lg:px-0">
+          <div className="min-w-[700px] lg:min-w-full relative">
+            <div className="absolute left-0 right-0 top-2.5 h-px bg-white/10" />
+            <div className="absolute left-0 top-2.5 h-px bg-[#bf953f]/60" style={{ width: "100%" }} />
+            
+            <div className="grid grid-cols-4 relative">
+              {steps.map((s) => (
+                <div
+                  key={s.n}
+                  data-testid={`timeline-${s.n}`}
+                  className="flex flex-col items-start gap-4"
+                >
+                  <div className="flex-shrink-0 w-5 h-5 border border-[#bf953f] bg-[#050505] rounded-full flex items-center justify-center relative z-10">
+                    <span className="w-1.5 h-1.5 bg-[#bf953f] rounded-full" />
+                  </div>
+                  <div className="pr-4">
+                    <p className="text-[10px] uppercase tracking-[0.3em] text-[#bf953f] mb-1">
+                      {s.day}
+                    </p>
+                    <p className="font-cinzel text-sm md:text-base text-white whitespace-nowrap">
+                      {s.title}
+                    </p>
+                  </div>
                 </div>
-                <div className="pr-4">
-                  <p className="text-[10px] uppercase tracking-[0.3em] text-[#bf953f] mb-1">
-                    {s.day}
-                  </p>
-                  <p className="font-cinzel text-sm md:text-base text-white">
-                    {s.title}
-                  </p>
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </div>
