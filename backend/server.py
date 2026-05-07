@@ -191,6 +191,43 @@ async def send_lead_email(name: str, recipient: str) -> tuple[bool, Optional[str
         return False, str(e)
 
 
+async def send_admin_alert_new_lead(lead: "Lead") -> None:
+    """Notify the team when a new lead is captured (best-effort, non-blocking)."""
+    if not RESEND_API_KEY or not SENDER_EMAIL:
+        return
+    html = f"""
+    <div style="font-family:Helvetica,Arial,sans-serif;background:#0a0a0a;color:#fff;padding:32px;">
+      <p style="font-size:11px;letter-spacing:6px;text-transform:uppercase;color:#bf953f;font-weight:bold;margin:0 0 16px 0;">
+        Dalpin Heritage · Novo Lead
+      </p>
+      <h1 style="font-family:Georgia,serif;font-size:24px;color:#fff;margin:0 0 24px 0;">
+        {lead.name} <span style="color:#bf953f;">·</span> {lead.role}
+      </h1>
+      <table cellpadding="6" cellspacing="0" style="font-size:14px;color:#ccc;">
+        <tr><td><strong style="color:#bf953f;">Email:</strong></td><td><a href="mailto:{lead.email}" style="color:#fff;">{lead.email}</a></td></tr>
+        <tr><td><strong style="color:#bf953f;">Cargo:</strong></td><td>{lead.role}</td></tr>
+        <tr><td><strong style="color:#bf953f;">Data:</strong></td><td>{lead.created_at.strftime('%d %b %Y · %H:%M')}</td></tr>
+        <tr><td><strong style="color:#bf953f;">Email PDF:</strong></td><td>{'✅ Enviado' if lead.email_sent else '❌ ' + (lead.email_error or 'Falhou')}</td></tr>
+      </table>
+      <p style="margin-top:32px;font-size:12px;color:#888;">
+        Acesso ao painel admin: <a href="{APP_PUBLIC_URL}/admin" style="color:#bf953f;">{APP_PUBLIC_URL}/admin</a>
+      </p>
+    </div>
+    """
+    params = {
+        "from": f"{SENDER_NAME} <{SENDER_EMAIL}>",
+        "to": [SENDER_EMAIL],
+        "subject": f"⚡ Novo lead NIS2 · {lead.name} ({lead.role})",
+        "html": html,
+        "reply_to": lead.email,
+    }
+    try:
+        await asyncio.to_thread(resend.Emails.send, params)
+        logger.info(f"Admin alert sent for new lead {lead.email}")
+    except Exception as e:
+        logger.warning(f"Admin alert failed: {e}")
+
+
 # ---------- Routes ----------
 @api_router.get("/")
 async def root():
@@ -212,7 +249,7 @@ async def create_lead(payload: LeadCreate, background_tasks: BackgroundTasks):
     if not sent:
         logger.warning(f"Lead {lead.email} saved but email NOT sent: {err}")
 
-    # Schedule non-blocking Notion sync
+    # Schedule non-blocking Notion sync + admin alert
     background_tasks.add_task(
         sync_lead_background,
         lead.id,
@@ -223,6 +260,7 @@ async def create_lead(payload: LeadCreate, background_tasks: BackgroundTasks):
         db,
         lead.created_at.date().isoformat(),
     )
+    background_tasks.add_task(send_admin_alert_new_lead, lead)
     return lead
 
 

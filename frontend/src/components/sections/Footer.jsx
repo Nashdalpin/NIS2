@@ -44,10 +44,10 @@ export const Footer = () => (
         <div className="lg:col-span-2 space-y-4">
           <p className="micro-label text-[9px]">Legal</p>
           <ul className="space-y-3 font-outfit text-sm">
-            <li><a href="#" className="text-white/60 hover:text-[#bf953f]">Privacidade</a></li>
-            <li><a href="#" className="text-white/60 hover:text-[#bf953f]">Cookies</a></li>
-            <li><a href="#" className="text-white/60 hover:text-[#bf953f]">Termos</a></li>
-            <li><a href="#" className="text-white/60 hover:text-[#bf953f]">RGPD</a></li>
+            <li><a href="/privacidade" className="text-white/60 hover:text-[#bf953f]">Privacidade</a></li>
+            <li><a href="/cookies" className="text-white/60 hover:text-[#bf953f]">Cookies</a></li>
+            <li><a href="/termos" className="text-white/60 hover:text-[#bf953f]">Termos</a></li>
+            <li><a href="/privacidade" className="text-white/60 hover:text-[#bf953f]">RGPD</a></li>
           </ul>
         </div>
 

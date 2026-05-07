@@ -20,6 +20,9 @@ import ScrollProgress from "@/components/sections/ScrollProgress";
 import CookieConsent from "@/components/sections/CookieConsent";
 import FadeIn from "@/components/sections/FadeIn";
 import Admin from "@/pages/Admin";
+import Privacy from "@/pages/Privacy";
+import Terms from "@/pages/Terms";
+import Cookies from "@/pages/Cookies";
 
 const Landing = () => {
   const [priorityOpen, setPriorityOpen] = useState(false);
@@ -96,6 +99,9 @@ function App() {
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/admin" element={<Admin />} />
+          <Route path="/privacidade" element={<Privacy />} />
+          <Route path="/termos" element={<Terms />} />
+          <Route path="/cookies" element={<Cookies />} />
         </Routes>
       </BrowserRouter>
     </div>

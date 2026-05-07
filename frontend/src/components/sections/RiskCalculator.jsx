@@ -156,9 +156,13 @@ const Gauge = ({ score, color }) => {
 };
 
 export const RiskCalculator = ({ onRequestReport, onPriorityClick }) => {
-  const [step, setStep] = useState(-1); // -1 = intro, 0..N-1 = questions, N = result
+  const [step, setStep] = useState(-1); // -1 = intro, 0..N-1 = questions, N = email gate, N+1 = result
   const [answers, setAnswers] = useState({});
   const [submitted, setSubmitted] = useState(false);
+  const [gate, setGate] = useState({ name: "", email: "", company: "" });
+  const [persisting, setPersisting] = useState(false);
+  const EMAIL_GATE_STEP = QUESTIONS.length;
+  const RESULT_STEP = QUESTIONS.length + 1;
 
   const score = useMemo(() => {
     const raw = QUESTIONS.reduce((sum, q) => {
@@ -170,54 +174,57 @@ export const RiskCalculator = ({ onRequestReport, onPriorityClick }) => {
   }, [answers]);
 
   const level = computeLevel(score);
-  const isResult = step === QUESTIONS.length;
+  const isResult = step === RESULT_STEP;
+  const isGate = step === EMAIL_GATE_STEP;
 
-  const persist = async (finalScore, finalLevel) => {
+  const persist = async (finalScore, finalLevel, contact) => {
     if (submitted) return;
+    setPersisting(true);
     try {
       await axios.post(`${API}/risk-assessment`, {
-        answers,
+        answers: { ...answers, _name: contact?.name || null },
         score: finalScore,
         level: finalLevel,
+        email: contact?.email || null,
+        company: contact?.company || null,
       });
       setSubmitted(true);
     } catch (e) {
-      // silent — UX still shows result
       console.error(e);
+    } finally {
+      setPersisting(false);
     }
   };
 
   const select = (qId, val) => {
     setAnswers((p) => ({ ...p, [qId]: val }));
-    // auto-advance
+    // auto-advance, on last question go to email gate (not result)
     setTimeout(() => {
-      setStep((s) => {
-        const next = s + 1;
-        if (next === QUESTIONS.length) {
-          // compute on next-tick state — but since answers updated, recompute from latest
-          // we'll persist inside a useEffect-like pattern via setTimeout
-          setTimeout(() => {
-            const updated = { ...answers, [qId]: val };
-            const raw = QUESTIONS.reduce((sum, q) => {
-              const opt = q.options.find((o) => o.value === updated[q.id]);
-              return sum + (opt ? opt.score : 0);
-            }, 0);
-            const sc = Math.round((raw / TOTAL_MAX) * 100);
-            persist(sc, computeLevel(sc).label);
-          }, 50);
-        }
-        return next;
-      });
+      setStep((s) => Math.min(s + 1, EMAIL_GATE_STEP));
     }, 220);
+  };
+
+  const submitGate = async (e) => {
+    e.preventDefault();
+    if (!gate.email) return;
+    await persist(score, level.label, gate);
+    setStep(RESULT_STEP);
+  };
+
+  const skipGate = async () => {
+    await persist(score, level.label, null);
+    setStep(RESULT_STEP);
   };
 
   const reset = () => {
     setStep(-1);
     setAnswers({});
     setSubmitted(false);
+    setGate({ name: "", email: "", company: "" });
   };
 
-  const progress = step < 0 ? 0 : step >= QUESTIONS.length ? 100 : (step / QUESTIONS.length) * 100;
+  const progress =
+    step < 0 ? 0 : step >= RESULT_STEP ? 100 : (step / RESULT_STEP) * 100;
   const current = step >= 0 && step < QUESTIONS.length ? QUESTIONS[step] : null;
 
   return (
@@ -339,6 +346,70 @@ export const RiskCalculator = ({ onRequestReport, onPriorityClick }) => {
                   As respostas avançam automaticamente
                 </span>
               </div>
+            </div>
+          )}
+
+          {/* EMAIL GATE — captures lead before showing score */}
+          {isGate && (
+            <div data-testid="risk-gate" className="space-y-8 py-2">
+              <div className="text-center space-y-3">
+                <p className="micro-label text-[9px]">Última Etapa</p>
+                <h3 className="font-cinzel text-2xl md:text-3xl leading-tight">
+                  O seu diagnóstico está <span className="gold-text">pronto</span>.
+                </h3>
+                <p className="font-outfit text-white/60 max-w-xl mx-auto leading-relaxed">
+                  Receba o relatório completo por email com o score, nível
+                  de risco e recomendações personalizadas para o seu sector.
+                </p>
+              </div>
+              <form
+                onSubmit={submitGate}
+                className="space-y-3 max-w-md mx-auto"
+              >
+                <input
+                  type="text"
+                  placeholder="Nome"
+                  value={gate.name}
+                  onChange={(e) => setGate({ ...gate, name: e.target.value })}
+                  data-testid="risk-gate-name"
+                  className="bg-white/5 border border-white/10 px-5 py-4 w-full focus:border-[#bf953f] outline-none text-sm placeholder:text-white/30"
+                />
+                <input
+                  type="email"
+                  required
+                  placeholder="Email Corporativo"
+                  value={gate.email}
+                  onChange={(e) => setGate({ ...gate, email: e.target.value })}
+                  data-testid="risk-gate-email"
+                  className="bg-white/5 border border-white/10 px-5 py-4 w-full focus:border-[#bf953f] outline-none text-sm placeholder:text-white/30"
+                />
+                <input
+                  type="text"
+                  placeholder="Organização (opcional)"
+                  value={gate.company}
+                  onChange={(e) => setGate({ ...gate, company: e.target.value })}
+                  data-testid="risk-gate-company"
+                  className="bg-white/5 border border-white/10 px-5 py-4 w-full focus:border-[#bf953f] outline-none text-sm placeholder:text-white/30"
+                />
+                <button
+                  type="submit"
+                  disabled={persisting || !gate.email}
+                  data-testid="risk-gate-submit"
+                  className="w-full gold-bg text-black font-bold py-4 uppercase tracking-[0.3em] text-[11px] hover:brightness-110 transition-all disabled:opacity-50"
+                >
+                  {persisting ? "A processar..." : "Ver Diagnóstico"}
+                </button>
+                <button
+                  type="button"
+                  onClick={skipGate}
+                  className="w-full text-[10px] uppercase tracking-[0.3em] text-white/40 hover:text-[#bf953f] py-2"
+                >
+                  Saltar e ver score (sem relatório)
+                </button>
+              </form>
+              <p className="text-[9px] text-center text-white/30 uppercase tracking-[0.3em]">
+                Os seus dados nunca são partilhados · RGPD
+              </p>
             </div>
           )}
 

@@ -53,7 +53,7 @@ export const Hero = ({ onScrollDown, onPriorityClick }) => {
           . Auditoria e implementação NIS2 para empresas que não aceitam falhas.
         </p>
 
-        <div className="flex flex-col sm:flex-row gap-5 justify-center pt-6">
+        <div className="flex flex-col sm:flex-row gap-5 justify-center pt-6 flex-wrap">
           <a
             href="#captura"
             data-testid="hero-primary-cta"
@@ -62,12 +62,21 @@ export const Hero = ({ onScrollDown, onPriorityClick }) => {
             Descarregar Protocolo
             <span className="block w-6 h-px bg-black transition-all group-hover:w-10" />
           </a>
+          <a
+            href="https://calendly.com/dalpinheritage/nis2-readiness"
+            target="_blank"
+            rel="noreferrer"
+            data-testid="hero-calendly-cta"
+            className="border border-[#bf953f]/40 text-[#bf953f] py-5 px-10 font-bold text-[11px] uppercase tracking-[0.35em] hover:bg-[#bf953f]/10 hover:border-[#bf953f] transition-all duration-500 inline-flex items-center justify-center gap-3"
+          >
+            Agendar Consulta
+          </a>
           <button
             onClick={onPriorityClick}
             data-testid="hero-secondary-cta"
-            className="border border-white/30 text-white py-5 px-12 font-bold text-[11px] uppercase tracking-[0.35em] hover:border-[#bf953f] hover:text-[#bf953f] transition-all duration-500"
+            className="border border-white/30 text-white py-5 px-10 font-bold text-[11px] uppercase tracking-[0.35em] hover:border-white/60 transition-all duration-500"
           >
-            Consultar Especialista
+            Priority Audit
           </button>
         </div>
 
