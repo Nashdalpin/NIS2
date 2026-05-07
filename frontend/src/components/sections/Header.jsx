@@ -58,9 +58,9 @@ export const Header = ({ onPriorityClick }) => {
         <button
           onClick={onPriorityClick}
           data-testid="header-priority-cta"
-          className="hidden md:inline-flex items-center text-[11px] uppercase tracking-[0.25em] text-black bg-[#bf953f] hover:bg-white px-6 py-3 transition-all"
+          className="gold-btn hidden md:inline-flex items-center text-[11px] uppercase tracking-[0.25em] text-black bg-[#bf953f] hover:bg-white px-6 py-3 transition-all"
         >
-          Priority Audit
+          <span>Priority Audit</span>
         </button>
 
         <button

@@ -121,7 +121,7 @@ export const PriorityModal = ({ open, onClose }) => {
                 type="submit"
                 disabled={loading}
                 data-testid="priority-submit"
-                className="w-full gold-bg text-black font-bold py-4 uppercase tracking-[0.3em] text-[10px] hover:brightness-110 transition-all disabled:opacity-50 inline-flex items-center justify-center gap-2"
+                className="gold-btn w-full gold-bg text-black font-bold py-4 uppercase tracking-[0.3em] text-[10px] hover:brightness-110 transition-all disabled:opacity-50 inline-flex items-center justify-center gap-2"
               >
                 {loading ? (
                   <Loader2 size={12} className="animate-spin" />

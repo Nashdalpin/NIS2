@@ -1,4 +1,5 @@
 import { Lock, Clock, ShieldCheck } from "lucide-react";
+import { OrnamentDivider } from "./Ornaments";
 
 const risks = [
   {
@@ -25,13 +26,19 @@ export const Risks = () => (
     className="py-16 md:py-24 lg:py-32 bg-[#0a0a0a] border-y border-white/5"
   >
     <div className="max-w-5xl mx-auto px-5 sm:px-6 text-center mb-12 md:mb-20">
-      <p className="micro-label mb-5 md:mb-6">Os Custos da Negligência</p>
+      <p className="micro-label mb-5 md:mb-6 inline-flex items-center gap-3">
+        <span className="font-cinzel tracking-[0.2em] text-[#bf953f]/70">II</span>
+        <span className="w-6 h-px bg-[#bf953f]/40" />
+        <span>Os Custos da Negligência</span>
+        <span className="w-6 h-px bg-[#bf953f]/40" />
+        <span className="font-cinzel tracking-[0.2em] text-[#bf953f]/70">II</span>
+      </p>
       <h2 className="font-cinzel text-2xl sm:text-3xl md:text-5xl lg:text-6xl leading-[1.15] italic max-w-4xl mx-auto">
         "A paz de espírito custa menos
         <br />
         que a <span className="gold-text not-italic">negligência</span>."
       </h2>
-      <div className="h-px w-20 sm:w-24 bg-[#bf953f]/60 mx-auto mt-8 md:mt-12" />
+      <OrnamentDivider className="mt-8 md:mt-12 max-w-xs mx-auto" />
     </div>
 
     <div className="max-w-6xl mx-auto px-5 sm:px-6 grid md:grid-cols-3 gap-10 md:gap-12 lg:gap-16">

@@ -29,7 +29,7 @@ export const Hero = ({ onScrollDown, onPriorityClick }) => {
       <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-[#bf953f]/20 to-transparent -z-10" />
 
       <div className="max-w-6xl mx-auto space-y-7 sm:space-y-10">
-        <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 sm:px-4 sm:py-2 border border-[#bf953f]/40 rounded-full">
+        <div className="badge-shimmer inline-flex items-center gap-2.5 px-3.5 py-1.5 sm:px-4 sm:py-2 border border-[#bf953f]/40 rounded-full">
           <span className="w-1.5 h-1.5 rounded-full bg-[#bf953f] animate-pulse" />
           <span className="text-[9px] sm:text-[10px] uppercase tracking-[0.4em] sm:tracking-[0.5em] text-[#bf953f] font-bold">
             Diretiva UE 2022/2555 (NIS2)
@@ -57,7 +57,7 @@ export const Hero = ({ onScrollDown, onPriorityClick }) => {
           <a
             href="#captura"
             data-testid="hero-primary-cta"
-            className="group gold-bg text-black py-4 sm:py-5 px-8 sm:px-12 font-bold text-[11px] uppercase tracking-[0.3em] sm:tracking-[0.35em] hover:brightness-110 transition-all duration-500 inline-flex items-center justify-center gap-3 shadow-[0_0_30px_rgba(191,149,63,0.25)]"
+            className="group gold-btn gold-bg text-black py-4 sm:py-5 px-8 sm:px-12 font-bold text-[11px] uppercase tracking-[0.3em] sm:tracking-[0.35em] hover:brightness-110 transition-all duration-500 inline-flex items-center justify-center gap-3 shadow-[0_0_30px_rgba(191,149,63,0.25)]"
           >
             Descarregar Protocolo
             <span className="block w-6 h-px bg-black transition-all group-hover:w-10" />

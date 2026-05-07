@@ -111,13 +111,38 @@ const DIAGNOSIS = {
     "Bom posicionamento. Recomendamos validação independente para certificar e proteger juridicamente o board.",
 };
 
+const lightenHex = (hex) => {
+  const c = hex.replace("#", "");
+  const n = parseInt(c, 16);
+  const r = Math.min(255, ((n >> 16) & 0xff) + 60);
+  const g = Math.min(255, ((n >> 8) & 0xff) + 60);
+  const b = Math.min(255, (n & 0xff) + 60);
+  return `rgb(${r}, ${g}, ${b})`;
+};
+
 const Gauge = ({ score, color }) => {
   const radius = 90;
   const circumference = 2 * Math.PI * radius;
   const offset = circumference - (score / 100) * circumference;
+  const lighter = lightenHex(color);
+  const gradId = `gauge-grad-${color.replace("#", "")}`;
   return (
     <div className="relative w-56 h-56 mx-auto">
       <svg viewBox="0 0 200 200" className="w-full h-full -rotate-90">
+        <defs>
+          <linearGradient id={gradId} x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor={color} />
+            <stop offset="50%" stopColor={lighter} />
+            <stop offset="100%" stopColor={color} />
+          </linearGradient>
+          <filter id={`${gradId}-glow`} x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="2.5" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        </defs>
         <circle
           cx="100"
           cy="100"
@@ -130,19 +155,25 @@ const Gauge = ({ score, color }) => {
           cx="100"
           cy="100"
           r={radius}
-          stroke={color}
+          stroke={`url(#${gradId})`}
           strokeWidth="6"
           fill="transparent"
           strokeDasharray={circumference}
           strokeDashoffset={offset}
           strokeLinecap="round"
-          style={{ transition: "stroke-dashoffset 1s cubic-bezier(0.16,1,0.3,1)" }}
+          filter={`url(#${gradId}-glow)`}
+          style={{ transition: "stroke-dashoffset 1.2s cubic-bezier(0.16,1,0.3,1)" }}
         />
       </svg>
       <div className="absolute inset-0 flex flex-col items-center justify-center">
         <div
-          className="font-cinzel text-6xl leading-none"
-          style={{ color }}
+          className="font-cinzel text-6xl leading-none tabular-nums"
+          style={{
+            background: `linear-gradient(135deg, ${lighter} 0%, ${color} 100%)`,
+            WebkitBackgroundClip: "text",
+            backgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+          }}
           data-testid="risk-score-value"
         >
           {score}
@@ -244,7 +275,13 @@ export const RiskCalculator = ({ onRequestReport, onPriorityClick }) => {
 
       <div className="max-w-5xl mx-auto">
         <div className="text-center mb-10 md:mb-14">
-          <p className="micro-label mb-5 md:mb-6">Diagnóstico em 60 Segundos</p>
+          <p className="micro-label mb-5 md:mb-6 inline-flex items-center gap-3">
+            <span className="font-cinzel tracking-[0.2em] text-[#bf953f]/70">III</span>
+            <span className="w-6 h-px bg-[#bf953f]/40" />
+            <span>Diagnóstico em 60 Segundos</span>
+            <span className="w-6 h-px bg-[#bf953f]/40" />
+            <span className="font-cinzel tracking-[0.2em] text-[#bf953f]/70">III</span>
+          </p>
           <h2 className="font-cinzel text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.1] tracking-tight">
             Calculadora de <span className="gold-text">Exposição NIS2</span>.
           </h2>
@@ -263,14 +300,19 @@ export const RiskCalculator = ({ onRequestReport, onPriorityClick }) => {
                     ? "Diagnóstico Concluído"
                     : `Pergunta ${step + 1} de ${QUESTIONS.length}`}
                 </span>
-                <span className="text-[10px] uppercase tracking-[0.3em] text-white/40">
+                <span className="text-[10px] uppercase tracking-[0.3em] text-white/40 tabular-nums">
                   {Math.round(progress)}%
                 </span>
               </div>
-              <div className="h-px bg-white/10 relative">
+              <div className="h-px bg-white/10 relative overflow-hidden">
                 <div
-                  className="h-full bg-[#bf953f] transition-all duration-500"
-                  style={{ width: `${progress}%` }}
+                  className="h-full transition-all duration-700 ease-out"
+                  style={{
+                    width: `${progress}%`,
+                    background:
+                      "linear-gradient(90deg, #8a6a2a, #bf953f 50%, #f3d27a)",
+                    boxShadow: "0 0 8px rgba(191,149,63,0.6)",
+                  }}
                 />
               </div>
             </div>
@@ -295,10 +337,10 @@ export const RiskCalculator = ({ onRequestReport, onPriorityClick }) => {
               <button
                 onClick={() => setStep(0)}
                 data-testid="risk-start-btn"
-                className="bg-[#bf953f] text-black font-bold py-4 sm:py-5 px-8 sm:px-12 uppercase tracking-[0.3em] sm:tracking-[0.35em] text-[11px] hover:bg-white transition-all inline-flex items-center gap-3"
+                className="gold-btn bg-[#bf953f] text-black font-bold py-4 sm:py-5 px-8 sm:px-12 uppercase tracking-[0.3em] sm:tracking-[0.35em] text-[11px] hover:bg-white transition-all inline-flex items-center gap-3"
               >
-                Começar Diagnóstico
-                <ArrowRight size={14} />
+                <span>Começar Diagnóstico</span>
+                <ArrowRight size={14} className="relative z-[2]" />
               </button>
             </div>
           )}
@@ -396,7 +438,7 @@ export const RiskCalculator = ({ onRequestReport, onPriorityClick }) => {
                   type="submit"
                   disabled={persisting || !gate.email}
                   data-testid="risk-gate-submit"
-                  className="w-full gold-bg text-black font-bold py-4 uppercase tracking-[0.3em] text-[11px] hover:brightness-110 transition-all disabled:opacity-50"
+                  className="gold-btn w-full gold-bg text-black font-bold py-4 uppercase tracking-[0.3em] text-[11px] hover:brightness-110 transition-all disabled:opacity-50"
                 >
                   {persisting ? "A processar..." : "Ver Diagnóstico"}
                 </button>
@@ -442,10 +484,10 @@ export const RiskCalculator = ({ onRequestReport, onPriorityClick }) => {
                       ?.scrollIntoView({ behavior: "smooth" })
                   }
                   data-testid="risk-cta-report"
-                  className="bg-[#bf953f] text-black font-bold py-4 sm:py-5 px-6 sm:px-8 uppercase tracking-[0.25em] sm:tracking-[0.3em] text-[10px] sm:text-[11px] hover:bg-white transition-all inline-flex items-center justify-center gap-3"
+                  className="gold-btn bg-[#bf953f] text-black font-bold py-4 sm:py-5 px-6 sm:px-8 uppercase tracking-[0.25em] sm:tracking-[0.3em] text-[10px] sm:text-[11px] hover:bg-white transition-all inline-flex items-center justify-center gap-3"
                 >
-                  Receber Relatório Completo
-                  <ArrowRight size={14} />
+                  <span>Receber Relatório Completo</span>
+                  <ArrowRight size={14} className="relative z-[2]" />
                 </button>
                 <button
                   onClick={onPriorityClick}

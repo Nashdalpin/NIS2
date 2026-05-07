@@ -23,7 +23,7 @@ const fmt = (ms) => {
 const Cell = ({ value, label, gold = false }) => (
   <div className="text-center min-w-0 flex-1 sm:flex-none sm:min-w-[70px]">
     <div
-      className={`font-cinzel text-2xl sm:text-3xl md:text-5xl leading-none ${
+      className={`font-cinzel text-2xl sm:text-3xl md:text-5xl leading-none tabular-nums ${
         gold ? "gold-text" : "text-white"
       }`}
     >

@@ -1,4 +1,5 @@
 import { ArrowUpRight } from "lucide-react";
+import { Corners } from "./Ornaments";
 
 const steps = [
   {
@@ -32,7 +33,11 @@ export const Methodology = () => (
     <div className="max-w-7xl mx-auto">
       <div className="grid lg:grid-cols-2 gap-10 md:gap-16 lg:gap-20 items-start mb-12 md:mb-20">
         <div>
-          <p className="micro-label mb-5 md:mb-6">Nosso Framework</p>
+          <p className="micro-label mb-5 md:mb-6 flex items-center gap-3">
+            <span className="font-cinzel tracking-[0.2em] text-[#bf953f]/70">I</span>
+            <span className="w-6 h-px bg-[#bf953f]/40" />
+            <span>Nosso Framework</span>
+          </p>
           <h2 className="font-cinzel text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.1] tracking-tight mb-6 md:mb-8">
             90 Dias Para a
             <br />
@@ -57,8 +62,9 @@ export const Methodology = () => (
             <div
               key={s.n}
               data-testid={`step-card-${s.n}`}
-              className="glass-card p-6 md:p-8 lg:p-10 relative overflow-hidden min-h-[180px] md:min-h-[220px]"
+              className="group glass-card p-6 md:p-8 lg:p-10 relative overflow-hidden min-h-[180px] md:min-h-[220px]"
             >
+              <Corners />
               <span className="step-number">{s.n}</span>
               <div className="relative z-10">
                 <p className="micro-label mb-3 md:mb-4 text-[9px]">Fase {s.n}</p>

@@ -42,28 +42,95 @@
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
         overflow-x: hidden;
+        font-feature-settings: 'ss01', 'cv11', 'kern';
+    }
+
+    h1, h2, h3 {
+        text-wrap: balance;
+        letter-spacing: -0.01em;
+    }
+
+    p {
+        text-wrap: pretty;
     }
 
     ::selection {
         background-color: #bf953f;
         color: #000;
     }
+
+    /* Custom scrollbar (desktop) */
+    @media (min-width: 768px) {
+        ::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #050505;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #8a6a2a 0%, #bf953f 50%, #8a6a2a 100%);
+            border: 2px solid #050505;
+            border-radius: 8px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, #bf953f 0%, #d4a857 50%, #bf953f 100%);
+        }
+        html {
+            scrollbar-color: #bf953f #050505;
+            scrollbar-width: thin;
+        }
+    }
 }
 
 @layer utilities {
     .gold-text {
-        background: linear-gradient(135deg, #d4a857 0%, #bf953f 50%, #8a6a2a 100%);
+        background: linear-gradient(110deg,
+            #8a6a2a 0%,
+            #bf953f 25%,
+            #f3d27a 50%,
+            #bf953f 75%,
+            #8a6a2a 100%);
+        background-size: 200% auto;
         -webkit-background-clip: text;
         background-clip: text;
         -webkit-text-fill-color: transparent;
         color: transparent;
+        animation: gold-shimmer 8s linear infinite;
     }
 
     .gold-bg {
         background: linear-gradient(135deg, #d4a857 0%, #bf953f 100%);
     }
 
+    /* Gold button with hover light-sweep */
+    .gold-btn {
+        position: relative;
+        overflow: hidden;
+        isolation: isolate;
+    }
+
+    .gold-btn::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(110deg,
+            transparent 30%,
+            rgba(255, 255, 255, 0.45) 50%,
+            transparent 70%);
+        transform: translateX(-120%);
+        transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+        pointer-events: none;
+        z-index: 0;
+        mix-blend-mode: overlay;
+    }
+
+    .gold-btn:hover::before {
+        transform: translateX(120%);
+    }
+
     .glass-card {
+        position: relative;
         background: rgba(255, 255, 255, 0.025);
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
@@ -71,10 +138,108 @@
         transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
+    .glass-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 12%;
+        right: 12%;
+        height: 1px;
+        background: linear-gradient(90deg,
+            transparent,
+            rgba(191, 149, 63, 0.5),
+            transparent);
+        opacity: 0;
+        transition: opacity 0.5s ease;
+        pointer-events: none;
+    }
+
     .glass-card:hover {
         border-color: rgba(191, 149, 63, 0.4);
         transform: translateY(-2px);
-        box-shadow: 0 0 24px rgba(191, 149, 63, 0.12);
+        box-shadow: 0 8px 32px -8px rgba(191, 149, 63, 0.18),
+                    0 0 0 1px rgba(191, 149, 63, 0.08);
+    }
+
+    .glass-card:hover::before {
+        opacity: 1;
+    }
+
+    /* L-shaped corner accent (use as <span class="corner-tl|tr|bl|br" />) */
+    .corner-tl, .corner-tr, .corner-bl, .corner-br {
+        position: absolute;
+        width: 14px;
+        height: 14px;
+        pointer-events: none;
+        opacity: 0.55;
+        transition: opacity 0.5s ease, width 0.5s ease, height 0.5s ease;
+    }
+    .corner-tl { top: 10px; left: 10px; border-top: 1px solid #bf953f; border-left: 1px solid #bf953f; }
+    .corner-tr { top: 10px; right: 10px; border-top: 1px solid #bf953f; border-right: 1px solid #bf953f; }
+    .corner-bl { bottom: 10px; left: 10px; border-bottom: 1px solid #bf953f; border-left: 1px solid #bf953f; }
+    .corner-br { bottom: 10px; right: 10px; border-bottom: 1px solid #bf953f; border-right: 1px solid #bf953f; }
+
+    .group:hover .corner-tl, .group:hover .corner-tr,
+    .group:hover .corner-bl, .group:hover .corner-br {
+        opacity: 1;
+        width: 22px;
+        height: 22px;
+    }
+
+    /* Ornamental section divider: ─── ◆ ─── */
+    .ornament-divider {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 14px;
+        opacity: 0.5;
+    }
+    .ornament-divider::before,
+    .ornament-divider::after {
+        content: '';
+        flex: 1;
+        max-width: 80px;
+        height: 1px;
+        background: linear-gradient(90deg,
+            transparent,
+            rgba(191, 149, 63, 0.5));
+    }
+    .ornament-divider::after {
+        background: linear-gradient(90deg,
+            rgba(191, 149, 63, 0.5),
+            transparent);
+    }
+    .ornament-divider span {
+        width: 5px;
+        height: 5px;
+        background: #bf953f;
+        transform: rotate(45deg);
+        box-shadow: 0 0 12px rgba(191, 149, 63, 0.6);
+    }
+
+    /* Tabular numbers for countdown / scores */
+    .tabular-nums {
+        font-variant-numeric: tabular-nums;
+        font-feature-settings: 'tnum';
+    }
+
+    /* Hero badge light sweep */
+    .badge-shimmer {
+        position: relative;
+        overflow: hidden;
+        isolation: isolate;
+    }
+    .badge-shimmer::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(110deg,
+            transparent 40%,
+            rgba(191, 149, 63, 0.3) 50%,
+            transparent 60%);
+        transform: translateX(-100%);
+        animation: badge-sweep 4.5s ease-in-out infinite;
+        pointer-events: none;
     }
 
     .grain {
@@ -136,4 +301,21 @@
         -ms-overflow-style: none;
         scrollbar-width: none;
     }
+}
+
+@keyframes gold-shimmer {
+    0% { background-position: 0% center; }
+    100% { background-position: 200% center; }
+}
+
+@keyframes badge-sweep {
+    0%, 30% { transform: translateX(-100%); }
+    55%, 100% { transform: translateX(100%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .gold-text { animation: none; }
+    .badge-shimmer::after { animation: none; }
+    .marquee-track { animation: none; }
+    .radar-ring { animation: none; }
 }

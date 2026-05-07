@@ -40,7 +40,13 @@ export const FAQ = () => (
   >
     <div className="max-w-4xl mx-auto">
       <div className="text-center mb-10 md:mb-16">
-        <p className="micro-label mb-5 md:mb-6">Dúvidas Recorrentes do Board</p>
+        <p className="micro-label mb-5 md:mb-6 inline-flex items-center gap-3">
+          <span className="font-cinzel tracking-[0.2em] text-[#bf953f]/70">V</span>
+          <span className="w-6 h-px bg-[#bf953f]/40" />
+          <span>Dúvidas Recorrentes do Board</span>
+          <span className="w-6 h-px bg-[#bf953f]/40" />
+          <span className="font-cinzel tracking-[0.2em] text-[#bf953f]/70">V</span>
+        </p>
         <h2 className="font-cinzel text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.1] tracking-tight">
           Respostas <span className="gold-text">precisas</span>.
         </h2>

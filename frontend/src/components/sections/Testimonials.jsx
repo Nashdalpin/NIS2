@@ -1,4 +1,5 @@
 import { Quote } from "lucide-react";
+import { Corners } from "./Ornaments";
 
 const testimonials = [
   {
@@ -30,7 +31,11 @@ export const Testimonials = () => (
     <div className="max-w-7xl mx-auto">
       <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between mb-10 md:mb-16 gap-6 md:gap-8">
         <div>
-          <p className="micro-label mb-5 md:mb-6">Discrição. Resultados.</p>
+          <p className="micro-label mb-5 md:mb-6 flex items-center gap-3">
+            <span className="font-cinzel tracking-[0.2em] text-[#bf953f]/70">IV</span>
+            <span className="w-6 h-px bg-[#bf953f]/40" />
+            <span>Discrição. Resultados.</span>
+          </p>
           <h2 className="font-cinzel text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.1] tracking-tight max-w-2xl">
             Quem confia, <span className="gold-text">não regressa</span>.
           </h2>
@@ -47,14 +52,21 @@ export const Testimonials = () => (
           <article
             key={i}
             data-testid={`testimonial-${i}`}
-            className="glass-card p-6 md:p-8 lg:p-10 flex flex-col justify-between md:min-h-[420px] relative"
+            className="group glass-card p-6 md:p-8 lg:p-10 flex flex-col justify-between md:min-h-[420px] relative overflow-hidden"
           >
+            <Corners />
+            <span
+              aria-hidden
+              className="pointer-events-none absolute -top-6 -right-2 font-cinzel text-[140px] leading-none text-[#bf953f]/[0.06] select-none"
+            >
+              "
+            </span>
             <Quote
               size={24}
-              className="text-[#bf953f]/40 mb-4 md:mb-6"
+              className="text-[#bf953f]/40 mb-4 md:mb-6 relative z-10"
               strokeWidth={1.2}
             />
-            <p className="font-cinzel italic text-base md:text-lg text-white/85 leading-snug mb-6 md:mb-10">
+            <p className="font-cinzel italic text-base md:text-lg text-white/85 leading-snug mb-6 md:mb-10 relative z-10">
               "{t.quote}"
             </p>
             <div className="flex items-center gap-3 md:gap-4 pt-4 md:pt-6 border-t border-white/10">

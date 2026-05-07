@@ -135,7 +135,7 @@ export const LeadCapture = () => {
                 type="submit"
                 disabled={loading}
                 data-testid="lead-form-submit"
-                className="w-full gold-bg text-black font-bold py-4 sm:py-5 uppercase tracking-[0.25em] sm:tracking-[0.3em] hover:brightness-110 transition-all text-[11px] sm:text-xs disabled:opacity-50 inline-flex items-center justify-center gap-3"
+                className="gold-btn w-full gold-bg text-black font-bold py-4 sm:py-5 uppercase tracking-[0.25em] sm:tracking-[0.3em] hover:brightness-110 transition-all text-[11px] sm:text-xs disabled:opacity-50 inline-flex items-center justify-center gap-3"
               >
                 {loading ? (
                   <>
